@@ -6,11 +6,13 @@ import LayoutEstudiante from "./layouts/LayoutEstudiante";
 import LayoutDocente from "./layouts/LayoutDocente";
 import ProtectedRoutes from "./pageauth/ProtectedRoutes";
 import Register from "./pageauth/Register";
+import PanelEst from "./page_estudiante/PanelEst";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //Auth
 import Login from "./pageauth/Login";
 
 import '../css/app.css'
+
 
 export const App = () => {
     return (
@@ -23,7 +25,7 @@ export const App = () => {
                 </Route>
                 <Route element={<ProtectedRoutes/>}>
                     <Route path="/estudiante" element={<LayoutEstudiante />}>
-                        <Route index element={<PageHome />} />
+                        <Route index element={<PanelEst />} />
                     </Route>
                     <Route path="/docente" element={<LayoutDocente />}>
                         <Route index element={<PageHome />} />

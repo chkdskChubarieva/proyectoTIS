@@ -9,7 +9,7 @@ const LayoutEstudiante = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(getRol!="estudiante"){
+    if(getRol()!="estudiante"){
       navigate("/")
     }
   },[])

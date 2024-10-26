@@ -1,18 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Config from '../Config';
+import { useNavigate } from "react-router-dom";
+import AuthUser from "./AuthUser";
 
 const Register = () => {
+    const {getToken} = AuthUser();
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [contrasenia, setContrasenia] = useState("");
     const [correo, setCorreo] = useState("");
     const [cod_sis, setCodigo] = useState("");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(getToken()){
+          navigate("/")
+        }
+      },[])
 
     const submitRegistro = async(e) => {
         e.preventDefault();
+
         Config.getRegister({nombre, apellido, contrasenia, correo, cod_sis})
         .then(({data})=>{
-            console.log(data)
+            if(data.success){
+                navigate("/login");
+            }
         })
     }
 

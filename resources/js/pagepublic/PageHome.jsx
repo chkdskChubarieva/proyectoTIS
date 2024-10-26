@@ -8,12 +8,13 @@ import equipo from "../../../assets/icons/equipo.png";
 import estudiantes from "../../../assets/icons/estudiantes.png";
 import examen from "../../../assets/icons/examen.png";
 import prueba from "../../../assets/icons/prueba.png";
-
+import Navbar from "../components/Navbar";
 import "../../css/app.css";
 
 export default function PageHome() {
     return (
         <>
+            <Navbar></Navbar>
             <main>
                 <div className="bg-black bg-opacity-50">
                     <h1 className="px-6 py-12 text-4xl font-semibold leading-tight text-white sm:px-12 sm:py-32 sm:text-5xl md:w-1/2 md:text-6xl">

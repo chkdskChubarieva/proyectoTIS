@@ -47,9 +47,9 @@ class AuthController extends Controller
         // Insertar datos en la tabla 'estudiantes' usando el ID del usuario creado
         Estudiante::create([
             'cod_sis' => $input['cod_sis'],
-            'tipo_est' => $input['tipo_est'],
-            'rol_scrum' => $input['rol_scrum'],
-            'ID_usuario' => $user->id, // Relacionar con la tabla 'users'
+            'tipo_est' => $input['tipo_est'] ?? null,
+            'rol_scrum' => $input['rol_scrum'] ?? null,
+            'ID_usuario' => $user->ID_usuario, // Relacionar con la tabla 'users'
         ]);
 
         // Asignar el rol de estudiante al usuario creado
@@ -100,7 +100,7 @@ class AuthController extends Controller
     $response['token'] = $user->createToken("proyectoTIS")->plainTextToken;
     $response['user'] = $user;
     $response['success'] = true;
-
+    $response['message'] = "Logeado";
     return response()->json($response, 200);
     }  
 
