@@ -10,7 +10,17 @@ class Grupo_Empresa extends Model
     use HasFactory;
     protected $guarded = [];
     protected $table = 'grupo_empresas';
-    public function user(){
-       // return $this->hasMany(User::class);
+    public function docente()
+    {
+        return $this->belongsTo(Docente::class, 'ID_docente');
+    }
+
+    public function estudiante()
+    {
+        return $this->hasMany(Estudiante::class, 'ID_empresa');
+    }
+    public function productBacklog()
+    {
+        return $this->hasOne(ProductBacklog::class, 'ID_empresa');
     }
 }

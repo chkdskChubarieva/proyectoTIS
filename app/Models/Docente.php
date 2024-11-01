@@ -21,5 +21,8 @@ class Docente extends Model
     {
         return $this->belongsTo(User::class, 'ID_usuario');
     }
-
+    public function grupoEmpresas()
+    {
+        return $this->hasMany(Grupo_Empresa::class, 'ID_docente');
+    }
 }

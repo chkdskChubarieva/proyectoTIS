@@ -16,9 +16,7 @@ const LayoutEstudiante = () => {
   
   return (
     <>
-    <Navbar></Navbar>
     <Outlet></Outlet>
-    <Footer></Footer>
     </>
   )
 }

@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import {Outlet, useNavigate} from 'react-router-dom'
 import AuthUser from '../pageauth/AuthUser'
-
+import { useEffect } from 'react'
 const LayoutDocente = () => {
   const {getRol} = AuthUser()
   const navigate = useNavigate()

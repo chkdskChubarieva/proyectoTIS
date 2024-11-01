@@ -1,20 +1,30 @@
-import React from "react";
+import React from 'react'
 
-import Tarjeta from "../components/Tarjeta";
-import "../../css/PageHome.css";
-import archivos from "../../../assets/icons/archivos.png";
-import diploma from "../../../assets/icons/diploma.png";
-import equipo from "../../../assets/icons/equipo.png";
-import estudiantes from "../../../assets/icons/estudiantes.png";
-import examen from "../../../assets/icons/examen.png";
-import prueba from "../../../assets/icons/prueba.png";
-import Navbar from "../components/Navbar";
-import "../../css/app.css";
+import archivos from '../../../assets/icons/archivos.png'
+import diploma from '../../../assets/icons/diploma.png'
+import equipo from '../../../assets/icons/equipo.png'
+import estudiantes from '../../../assets/icons/estudiantes.png'
+import examen from '../../../assets/icons/examen.png'
+import prueba from '../../../assets/icons/prueba.png'
+import '../components/PageHome.css'
+import '../../css/app.css'
+import Tarjeta from '../components/Tarjeta'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import Navbar from '../components/Navbar'
 
 export default function PageHome() {
+
+    const botonesNavbar = [
+        { nombreBoton: 'Inicio', hrefBoton: '#inicio' },
+        { nombreBoton: 'Características', hrefBoton: '#caracteristicas' },
+        { nombreBoton: 'Contacto', hrefBoton: '#contacto' },
+      ]
+
     return (
         <>
-            <Navbar></Navbar>
+            <Header nombreBoton={'Iniciar sesión'} hrefBoton={'./login'} />
+            <Navbar botones={botonesNavbar} />
             <main>
                 <div className="bg-black bg-opacity-50">
                     <h1 className="px-6 py-12 text-4xl font-semibold leading-tight text-white sm:px-12 sm:py-32 sm:text-5xl md:w-1/2 md:text-6xl">
@@ -69,6 +79,8 @@ export default function PageHome() {
                     </div>
                 </section>
             </main>
+
+            <Footer/>
         </>
     );
 }

@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Config from '../Config';
 import { useNavigate } from "react-router-dom";
 import AuthUser from "./AuthUser";
+import LogoVistaSoft from "../../../assets/img/logo-vistasoft.png";
+import Header from "../components/Header";
+import Navbar from "../components/Navbar";
 
 const Register = () => {
     const {getToken} = AuthUser();
@@ -10,7 +13,13 @@ const Register = () => {
     const [contrasenia, setContrasenia] = useState("");
     const [correo, setCorreo] = useState("");
     const [cod_sis, setCodigo] = useState("");
+    const [emailError, setEmailError] = useState("");
     const navigate = useNavigate();
+
+    const passwordInput = useRef(null);
+    const passwordConfInput = useRef(null);
+    const showPasswordCheckbox = useRef(null);
+    const [passwordError, setPasswordError] = useState("");
 
     useEffect(() => {
         if(getToken()){
@@ -18,8 +27,19 @@ const Register = () => {
         }
       },[])
 
-    const submitRegistro = async(e) => {
+      const submitRegistro = async(e) => {
         e.preventDefault();
+
+        // Validacion de correo institucional y contraseña
+        if (!correo.endsWith("@est.umss.edu")) {
+            setEmailError("Debe usar su correo institucional");
+            return;
+        }
+
+        if (contrasenia !== passwordConfInput.current.value) {
+            setPasswordError("Las contraseñas no coinciden");
+            return;
+        }
 
         Config.getRegister({nombre, apellido, contrasenia, correo, cod_sis})
         .then(({data})=>{
@@ -31,46 +51,53 @@ const Register = () => {
 
     //Agregar codigo Javascript
 
+    const togglePasswordVisibility = () => {
+        if (showPasswordCheckbox.current) {
+            const isChecked = showPasswordCheckbox.current.checked;
+            // Cambiar el tipo de ambos campos
+            if (passwordInput.current) {
+                passwordInput.current.type = isChecked ? "text" : "password";
+            }
+            if (passwordConfInput.current) {
+                passwordConfInput.current.type = isChecked ? "text" : "password";
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (showPasswordCheckbox.current) {
+            showPasswordCheckbox.current.addEventListener("change", togglePasswordVisibility);
+        }
+        return () => {
+            if (showPasswordCheckbox.current) {
+                showPasswordCheckbox.current.removeEventListener("change", togglePasswordVisibility);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        const verificarContraseñas = () => {
+          if (passwordInput.current.value !== passwordConfInput.current.value) {
+            setPasswordError("Las contraseñas no coinciden");
+          } else {
+            setPasswordError("");
+          }
+        };
+      
+        passwordConfInput.current.addEventListener("input", verificarContraseñas);
+      
+        return () => {
+          passwordConfInput.current.removeEventListener("input", verificarContraseñas);
+        };
+    }, []);
+
+    const botonesNavbar = [{ nombreBoton: 'Inicio', hrefBoton: '/' }]
+
+
     return (
         <>
-            <header className="h-32">
-                <div className="flex items-center justify-between h-20 px-4 fila-1">
-                    <div className="px-3 py-1 bg-white rounded">
-                        <img
-                            className="w-8 sm:hidden"
-                            src="../../../assets/img/logo_umss-simple.png"
-                            alt=""
-                        />
-                        <img
-                            className="hidden w-28 sm:block"
-                            src="../../../assets/img/logo_umss.png"
-                            alt="logo-umss"
-                        />
-                    </div>
-
-                    <span className="text-xl font-bold text-slate-200 sm:text-2xl">
-                        EBEP - UMSS
-                    </span>
-
-                    <div className="font-semibold rounded-md text-slate-200">
-                        <a
-                            href="./login.html"
-                            id="registrarse"
-                            className="p-2 transition-all bg-white rounded bg-opacity-5 hover:bg-opacity-10 hover:shadow"
-                        >
-                            Iniciar sesión
-                        </a>
-                    </div>
-                </div>
-
-                <div className="flex items-center justify-center h-12 fila-2 bg-slate-200">
-                    <ul className="flex items-center h-full gap-2 font-semibold text-md text-slate-500 sm:gap-4">
-                        <li className="flex items-center h-full px-3 transition-colors hover:bg-slate-100">
-                            <a href="./index.html">Inicio</a>
-                        </li>
-                    </ul>
-                </div>
-            </header>
+            <Header nombreBoton={'Iniciar sesión'} hrefBoton={'/login'} />
+            <Navbar botones={botonesNavbar} />
 
             <main className="py-12 sm:pb-0 sm:pt-12">
                 <form
@@ -81,7 +108,7 @@ const Register = () => {
                     <div className="p-8">
                         <img
                             className="h-7"
-                            src="../../../assets/img/logo-vistasoft.png"
+                            src={LogoVistaSoft}
                             alt="logo-vistasoft"
                         />
                         <h1 className="my-4 text-3xl font-semibold text-slate-800">
@@ -139,9 +166,14 @@ const Register = () => {
                                 <input
                                     type="number"
                                     id="codigo"
-                                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-moz-appearance]:textfield"
                                     value={cod_sis}
-                                    onChange={(e)=>setCodigo(e.target.value)} required
+                                    onChange={(e) => {
+                                        if (e.target.value.length <= 9) {
+                                            setCodigo(e.target.value);
+                                        }
+                                    }}
+                                    required
                                 />
                                 <br />
                             </div>
@@ -159,9 +191,23 @@ const Register = () => {
                                     id="correo"
                                     className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
                                     value={correo}
-                                    onChange={(e)=>setCorreo(e.target.value)} required
+                                    onChange={(e) => setCorreo(e.target.value)} 
+                                    onBlur={(e) => {
+                                        if (!e.target.value.endsWith("@est.umss.edu")) {
+                                        setEmailError("Debe usar su correo institucional");
+                                        } else {
+                                        setEmailError("");
+                                        }
+                                    }} 
+                                    required
                                 />
                                 <br />
+
+                                {emailError && (
+                                <span className="text-red-500 text-xs flex">
+                                    {emailError}
+                                </span>
+                                )}
                             </div>
                         </div>
 
@@ -175,11 +221,20 @@ const Register = () => {
                                 </label>
                                 <br />
                                 <input
+                                    ref={passwordInput}
                                     type="password"
                                     id="password"
                                     className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
                                     value={contrasenia}
-                                    onChange={(e)=>setContrasenia(e.target.value)} required
+                                    onChange={(e) => {
+                                        setContrasenia(e.target.value);
+                                        if (e.target.value !== passwordConfInput.current.value) {
+                                          setPasswordError("Las contraseñas no coinciden");
+                                        } else {
+                                          setPasswordError("");
+                                        }
+                                    }}
+                                    required
                                 />
                                 <br />
                             </div>
@@ -193,6 +248,7 @@ const Register = () => {
                                 </label>
                                 <br />
                                 <input
+                                    ref={passwordConfInput}
                                     type="password"
                                     id="conf-password"
                                     className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
@@ -201,18 +257,25 @@ const Register = () => {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-1 my-1">
-                            <input
-                                type="checkbox"
-                                id="show-password"
-                                className="cursor-pointer"
-                            />
-                            <label
-                                htmlFor="show-password"
-                                className="text-sm cursor-pointer select-none text-slate-800"
-                            >
-                                Mostrar contraseña
-                            </label>
+                        <div className="flex items-center my-1 w-full justify-between">
+                            <div className="flex gap-1">
+                                <input
+                                    ref={showPasswordCheckbox}
+                                    type="checkbox"
+                                    id="show-password"
+                                    className="cursor-pointer"
+                                />
+                                <label
+                                    htmlFor="show-password"
+                                    className="text-sm cursor-pointer select-none text-slate-800"
+                                >
+                                    Mostrar contraseña
+                                </label>
+                            </div>
+
+                            <span className="text-red-500 text-xs">
+                                    {passwordError}
+                            </span>
                         </div>
 
                         <button
@@ -225,7 +288,7 @@ const Register = () => {
 
                         <div className="flex justify-center mt-2">
                             <a
-                                href="./login.html"
+                                href="./login"
                                 className="text-xs text-center transition-colors text-slate-800 hover:underline hover:decoration-slate-800"
                             >
                                 ¿Ya tienes una cuenta?{" "}

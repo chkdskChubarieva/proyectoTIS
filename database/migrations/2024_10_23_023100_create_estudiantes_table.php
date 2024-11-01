@@ -22,6 +22,12 @@ return new class extends Migration
                 ->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+                $table->unsignedBigInteger('ID_empresa')->unique()->nullable();
+                $table->foreign('ID_empresa')
+                    ->references('ID_empresa')
+                    ->on('grupo_empresas')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class HistoriaUsuario extends Model
+{
+    use HasFactory;
+
+    protected $table = 'historias_usuario';
+    protected $primaryKey = 'ID_historia';
+
+    protected $fillable = [
+        'desc_historia',
+        'prioridad',
+        'titulo',
+        'ID_sprint',
+    ];
+
+    public function tareas()
+    {
+        return $this->hasMany(Tarea::class, 'ID_historia');
+    }
+
+    public function sprintBacklog()
+    {
+        return $this->belongsTo(SprintBacklog::class, 'ID_sprint');
+    }
+}
+

@@ -16,12 +16,19 @@ class Estudiante extends Model
         'ID_usuario',
         'cod_sis',
         'tipo_est',
-        'rol_scrum'
+        'rol_scrum',
+        'ID_empresa'
     ];
     public function user()
     {
         return $this->belongsTo(User::class, 'ID_usuario');
     }
+    public function grupoEmpresa()
+    {
+        return $this->belongsTo(Grupo_Empresa::class, 'ID_empresa');
+    }
+    public function tareas()
+    {
+        return $this->hasMany(Tarea::class, 'ID_estudiante');
+    }
 }
-
-
