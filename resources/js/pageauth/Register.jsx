@@ -204,7 +204,7 @@ const Register = () => {
                                 <br />
 
                                 {emailError && (
-                                <span className="text-red-500 text-xs flex">
+                                <span className="flex text-xs text-red-500">
                                     {emailError}
                                 </span>
                                 )}
@@ -257,7 +257,7 @@ const Register = () => {
                             </div>
                         </div>
 
-                        <div className="flex items-center my-1 w-full justify-between">
+                        <div className="flex items-center justify-between w-full my-1">
                             <div className="flex gap-1">
                                 <input
                                     ref={showPasswordCheckbox}
@@ -273,7 +273,7 @@ const Register = () => {
                                 </label>
                             </div>
 
-                            <span className="text-red-500 text-xs">
+                            <span className="text-xs text-red-500">
                                     {passwordError}
                             </span>
                         </div>

@@ -23,7 +23,7 @@ export default function PageHome() {
 
     return (
         <>
-            <Header nombreBoton={'Iniciar sesión'} hrefBoton={'./login'} />
+            <Header />
             <Navbar botones={botonesNavbar} />
             <main>
                 <div className="bg-black bg-opacity-50">

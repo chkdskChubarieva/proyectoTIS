@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\Estudiante\EmpresaController;
 use App\Http\Controllers\Api\Docente\EmpresaController as EmpresaDocente;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
-
+use App\Http\Controllers\Api\Estudiante\EstudianteController;
 
 //Rutas publicas
 Route::prefix('v1')->group(function () {
@@ -22,12 +22,16 @@ Route::prefix('v1')->group(function () {
     Route::post("/auth/loginDoc", [AuthController::class, 'loginDoc']);
     //Rutas privadas
     Route::group(['middleware' => 'auth:sanctum'], function () {
-        //::auth
-        Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
         //:: rol estudiante
+        //Route::apiResource('/estudiante/getInfoEst', EstudianteController::class);
+        Route::post('/estudiante/getInfoEst', [EstudianteController::class, 'getInfoEst']);
         Route::apiResource('/estudiante/empresa', EmpresaController::class);
+
         //:: rol docente
         Route::apiResource('/docente/empresa', EmpresaDocente::class);
+
+        //::auth
+        Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     });
 });
 

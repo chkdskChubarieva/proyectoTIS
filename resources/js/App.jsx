@@ -6,7 +6,7 @@ import LayoutEstudiante from "./layouts/LayoutEstudiante";
 import LayoutDocente from "./layouts/LayoutDocente";
 import ProtectedRoutes from "./pageauth/ProtectedRoutes";
 import Register from "./pageauth/Register";
-import PanelEst from "./page_estudiante/PanelEst";
+import InicioEst from "./page_estudiante/InicioEst";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //Auth
 import Login from "./pageauth/Login";
@@ -24,8 +24,8 @@ export const App = () => {
                     <Route path="/register" element={<Register/>} />
                 </Route>
                 <Route element={<ProtectedRoutes/>}>
-                    <Route path="/estudiante" element={<LayoutEstudiante />}>
-                        <Route index element={<PanelEst />} />
+                    <Route path="/estudiante" element={<LayoutEstudiante/>}>
+                        <Route index element={<InicioEst/>} />
                     </Route>
                     <Route path="/docente" element={<LayoutDocente />}>
                         <Route index element={<PageHome />} />

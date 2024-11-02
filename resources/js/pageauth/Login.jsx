@@ -8,7 +8,8 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 
 const Login = () => {
-    const { getToken, setToken } = AuthUser();
+    const { getToken, setToken} = AuthUser();
+    const { getRol, setRol} = AuthUser();
     const [contrasenia, setContrasenia] = useState("");
     const [cod_sis, setCodigo] = useState("");
     const [message, setMessage] = useState("");
@@ -29,8 +30,12 @@ const Login = () => {
     useEffect(() => {
         // Redirigir si ya está autenticado
         if (getToken()) {
-            navigate("/");
+            if(getRol()==='docente')
+                navigate('/docente')
+            if(getRol()==='estudiante')
+                navigate('/estudiante')
         }
+        
 
         // Función para alternar la visibilidad de la contraseña
         const togglePasswordVisibility = (passwordRef, checkboxRef) => {
@@ -119,34 +124,40 @@ const Login = () => {
         await axios.get("/sanctum/csrf-cookie").then((response) => {
             Config.getLogin({ contrasenia, cod_sis })
             .then(({ data }) => {
+                console.log("Success:", data.success); // Muestra el estado success en la consola
                 if (data.success) {
                     setToken(data.user, 
                              data.token, 
                              data.user.roles[0].name
                     );
+                    localStorage.setItem("authToken", data.token);
+                    console.log("Token:", data.token); // Muestra el token en la consola
                 } else {
-                    console.log(data.message)
+                    console.log(data.message);
                 }
             })
         })
     }
-
+    
     const submitLoginDoc = async (e) => {   
         e.preventDefault();
         await axios.get("/sanctum/csrf-cookie").then((response) => {
             Config.getLoginDoc({ nombre_usuario, contrasenia })
             .then(({ data }) => {
+                console.log("Success:", data.success); // Muestra el estado success en la consola
                 if (data.success) {
                     setToken(data.user, 
                              data.token,
                              data.user.roles[0].name
                     );
+                    console.log("Token:", data.token); // Muestra el token en la consola
                 } else {
-                    console.log(data.message)
+                    console.log(data.message);
                 }
             })
         })
     }
+    
 
     const botonesNavbar = [{ nombreBoton: "Inicio", hrefBoton: "/" }];
 
