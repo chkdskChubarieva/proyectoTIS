@@ -1,19 +1,47 @@
 <?php
 
+use App\Http\Controllers\Api\FrontController;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\Estudiante\EmpresaController;
+use App\Http\Controllers\Api\Docente\EmpresaController as EmpresaDocente;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
+use App\Http\Controllers\Api\Estudiante\EstudianteController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+//Rutas publicas
+Route::prefix('v1')->group(function () {
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    //:public
+    //Route::get('list', [FrontController::class, 'list']);
+    //:auth
+    Route::post("/auth/register", [AuthController::class, 'register']);
+    Route::post("/auth/registerDoc", [AuthController::class, 'registerDoc']);
+    Route::post("/auth/login", [AuthController::class, 'login']);
+    Route::post("/auth/loginDoc", [AuthController::class, 'loginDoc']);
+    //Rutas privadas
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        //:: rol estudiante
+        //Route::apiResource('/estudiante/getInfoEst', EstudianteController::class);
+        Route::get('/estudiante/getInfoEst', [EstudianteController::class, 'getInfoEst']);
+        Route::apiResource('/estudiante/empresa', EmpresaController::class);
+
+        //:: rol docente
+        Route::apiResource('/docente/empresa', EmpresaDocente::class);
+
+        //::auth
+        Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    });
+});
+
+Route::middleware([
+    EnsureFrontendRequestsAreStateful::class,
+    'auth:sanctum'
+])->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Route::middleware(['cors'])->group(function () {
+    //Route::get('/example', 'ExampleController@index');
+//});
