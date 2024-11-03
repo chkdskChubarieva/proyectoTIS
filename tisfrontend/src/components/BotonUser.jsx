@@ -42,7 +42,7 @@ const BotonUser = () => {
     }, []);
 
     const rutasEstudiante = ["/estudiante"];
-    const rutasDocente = ["/prueba"];
+    const rutasDocente = ["/docente"];
 
     const esPanelEst = rutasEstudiante.includes(location.pathname);
     const esPanelDoc = rutasDocente.includes(location.pathname);

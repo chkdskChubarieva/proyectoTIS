@@ -1,6 +1,3 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
 import {Outlet, useNavigate} from 'react-router-dom'
 import AuthUser from '../pageauth/AuthUser'
 import { useEffect } from 'react'
@@ -12,14 +9,11 @@ const LayoutDocente = () => {
     if(getRol()!="docente"){
       navigate("/")
     }
-  },[])
+  },[getRol, navigate])
 
   return (
     <>
-    <h1>Docentes</h1>
-    <Navbar></Navbar>
     <Outlet></Outlet>
-    <Footer></Footer>
     </>
   )
 }

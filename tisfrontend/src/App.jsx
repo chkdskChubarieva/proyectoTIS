@@ -1,5 +1,3 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
 import LayoutPublic from "./layouts/LayoutPublic";
 import PageHome from "./pagepublic/PageHome";
 import LayoutEstudiante from "./layouts/LayoutEstudiante";
@@ -7,13 +5,14 @@ import LayoutDocente from "./layouts/LayoutDocente";
 import ProtectedRoutes from "./pageauth/ProtectedRoutes";
 import Register from "./pageauth/Register";
 import InicioEst from "./page_estudiante/InicioEst";
-
+import InicioDoc from "./page_docente/InicioDoc";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //Auth
 import Login from "./pageauth/Login";
 
 
 import './app.css'
+
 
 
 export const App = () => {
@@ -30,7 +29,7 @@ export const App = () => {
                         <Route index element={<InicioEst/>} />
                     </Route>
                     <Route path="/docente" element={<LayoutDocente />}>
-                        <Route index element={<PageHome />} />
+                        <Route index element={<InicioDoc />} />
                     </Route>
                 </Route>
             </Routes>

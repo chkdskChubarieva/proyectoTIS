@@ -28,7 +28,7 @@ const Header = () => {
     const rutasLogin = ["/login"];
     const rutasRegister = ["/register", "/"];
     const rutasEstudiante = ["/estudiante"];
-    const rutasDocente = ["/prueba"]; //cambiar prueba por docente
+    const rutasDocente = ["/docente"];
 
     // aqui tambien
     const esLogin = rutasLogin.includes(location.pathname);

@@ -1,10 +1,11 @@
-import React from "react";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import CardGrupoEmpresa from "../components/CardGrupoEmpresa";
-import avatar1 from "/assets/avatares/cerdo.png";
 
 const InicioDoc = () => {
+    
+
+
     return (
         <>
             <Header />
@@ -16,7 +17,7 @@ const InicioDoc = () => {
                     </span>
                 </div>
 
-                <article className="container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                <article className="container grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     <CardGrupoEmpresa
                         imagen={
                             "https://img.freepik.com/foto-gratis/belleza-otonal-abstracta-patron-venas-hoja-multicolor-generado-ia_188544-9871.jpg"
