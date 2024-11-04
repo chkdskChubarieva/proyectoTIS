@@ -1,29 +1,14 @@
-import React from "react";
 import { useLocation } from "react-router-dom";
 import logo_umss from "../assets/img/logo-umss.png";
 import logo_umss_simple from "../assets/img/logo-umss-simple.png";
 import BotonHeader from "./BotonHeader";
-import BotonLogout from "./BotonLogout";
-import BotonUser from "./BotonUser";
-import AuthUser from "../pageauth/AuthUser";
-import Config from "../Config";
+import BotonUserEst from "./BotonUserEst";
+import BotonUserDoc from "./BotonUserDoc";
+
+
 
 const Header = () => {
     const location = useLocation(); // Obtenemos la ruta actual
-
-    const { getLogout } = AuthUser();
-
-    const logoutUser = () => {
-        Config.getLogout()
-            .then((response) => {
-                getLogout();
-                console.log(response);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
-
     // insertaar aqui las rutas donde se debe mostrar un boton en especifico
     const rutasLogin = ["/login"];
     const rutasRegister = ["/register", "/"];
@@ -68,9 +53,11 @@ const Header = () => {
                                 hrefBoton={"/login"}
                                 nombreBoton={"Iniciar sesión"}
                             />
-                        ) : esPanelEst || esPanelDoc ? (
-                            <BotonUser />
-                        ) : null}
+                        ) : esPanelEst ?  (
+                            <BotonUserEst />
+                        ) : esPanelDoc ? (
+                            <BotonUserDoc />
+                        ) : null }
                     </div>
                 </div>
             </header>

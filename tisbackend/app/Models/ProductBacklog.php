@@ -13,8 +13,6 @@ class ProductBacklog extends Model
     protected $primaryKey = 'ID_pb';
 
     protected $fillable = [
-        'puntuacion_pb',
-        'observacion_pb',
         'ID_empresa',
     ];
 
@@ -23,8 +21,8 @@ class ProductBacklog extends Model
         return $this->belongsTo(Grupo_Empresa::class, 'ID_empresa');
     }
 
-    public function sprintBacklogs()
+    public function historiasUsuario()
     {
-        return $this->hasMany(SprintBacklog::class, 'ID_pb');
+        return $this->hasMany(HistoriaUsuario::class, 'ID_pb');
     }
 }

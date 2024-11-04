@@ -2,21 +2,21 @@ import { useState, useEffect, useRef } from "react";
 import BotonLogout from "./BotonLogout";
 import Config from "../Config";
 
-const BotonUser = () => {
-    const [estudiante, setEstudiante] = useState({});
+const BotonUserDoc = () => {
+    const [docente, setDocente] = useState({});
 
     useEffect(() => {
-        getInfoEst();
+        getInfoDoc();
     }, []);
 
-    const getInfoEst = async () => {
+    const getInfoDoc = async () => {
         try {
-            const response = await Config.getInfoEst();
+            const response = await Config.getInfoDoc();
             console.log(response);
-            setEstudiante(response.data);
+            setDocente(response.data);
         } catch (error) {
             console.error(
-                "Error al obtener la información del estudiante:",
+                "Error al obtener la información del docente:",
                 error
             );
         }
@@ -49,10 +49,10 @@ const BotonUser = () => {
                     onClick={toggleLogout}
                 >
                     <span className="hidden text-lg font-normal sm:block">
-                        Estudiante
+                        Docente
                     </span>
                     <img
-                        src={`https://ui-avatars.com/api/?size=40&bold=true&rounded=true&name=${estudiante.nombre}+${estudiante.apellido}`}
+                        src={`https://ui-avatars.com/api/?size=40&bold=true&rounded=true&name=${docente.nombre}+${docente.apellido}`}
                         alt="avatar"
                     />
                 </div>
@@ -60,9 +60,9 @@ const BotonUser = () => {
                 {mostrarLogout && (
                     <div className="absolute right-0 flex flex-col w-56 p-3 mt-2 text-center bg-white rounded shadow-md top-full bg-opacity-90">
                         <div className="flex flex-col leading-tight">
-                            <span className="text-neutral-800">{`${estudiante.nombre} ${estudiante.apellido}`}</span>
+                            <span className="text-neutral-800">{`${docente.nombre} ${docente.apellido}`}</span>
                             <span className="block font-bold text-neutral-700 sm:hidden">
-                                Estudiante
+                                Docente
                             </span>
                         </div>
                         <div className="my-2 border-t border-neutral-400" />
@@ -77,4 +77,4 @@ const BotonUser = () => {
     );
 };
 
-export default BotonUser;
+export default BotonUserDoc;

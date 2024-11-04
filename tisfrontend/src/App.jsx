@@ -12,6 +12,7 @@ import Login from "./pageauth/Login";
 
 
 import './app.css'
+import PreviaEmpresas from "./page_docente/PreviaEmpresas";
 
 
 
@@ -30,6 +31,7 @@ export const App = () => {
                     </Route>
                     <Route path="/docente" element={<LayoutDocente />}>
                         <Route index element={<InicioDoc />} />
+                        <Route path="/docente/empresas" element={<PreviaEmpresas/>} />
                     </Route>
                 </Route>
             </Routes>

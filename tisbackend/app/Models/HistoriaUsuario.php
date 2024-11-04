@@ -14,7 +14,6 @@ class HistoriaUsuario extends Model
 
     protected $fillable = [
         'desc_historia',
-        'prioridad',
         'titulo',
         'ID_sprint',
     ];
@@ -27,6 +26,11 @@ class HistoriaUsuario extends Model
     public function sprintBacklog()
     {
         return $this->belongsTo(SprintBacklog::class, 'ID_sprint');
+    }
+
+    public function productBacklog()
+    {
+        return $this->belongsTo(ProductBacklog::class, 'ID_pb');
     }
 }
 

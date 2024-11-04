@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AuthUser from "./AuthUser";
 import { useNavigate } from "react-router-dom";
 import LogoVistaSoft from "../assets/img/logo-vistasoft.png";
@@ -9,10 +9,10 @@ import axios from "axios";
 
 const Login = () => {
     const { getToken, setToken} = AuthUser();
-    const { getRol, setRol} = AuthUser();
+    const { getRol } = AuthUser();
     const [contrasenia, setContrasenia] = useState("");
     const [cod_sis, setCodigo] = useState("");
-    const [message, setMessage] = useState("");
+   
     const [nombre_usuario, setUsuario] = useState("");
     
     const navigate = useNavigate();
@@ -150,6 +150,7 @@ const Login = () => {
                              data.token,
                              data.user.roles[0].name
                     );
+                    localStorage.setItem("authToken", data.token);
                     console.log("Token:", data.token); // Muestra el token en la consola
                 } else {
                     console.log(data.message);

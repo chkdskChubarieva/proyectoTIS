@@ -13,10 +13,6 @@ return new class extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->string('nombre_sprint');
-            $table->unsignedBigInteger('ID_pb');
-
-            $table->foreign('ID_pb')->references('ID_pb')->on('product_backlogs')->onDelete('cascade');
-
             $table->timestamps();
         });
     }
