@@ -18,7 +18,7 @@ class ProductBacklog extends Model
 
     public function grupoEmpresa()
     {
-        return $this->belongsTo(Grupo_Empresa::class, 'ID_empresa');
+        return $this->belongsTo(GrupoEmpresa::class, 'ID_empresa');
     }
 
     public function historiasUsuario()
