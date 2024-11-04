@@ -47,6 +47,7 @@ const Register = () => {
 
         try {
             const { data } = await Config.getRegister({ nombre, apellido, contrasenia, correo, cod_sis });
+            console.log("data")
             if (data.success) {
                 navigate("/login");
             } else {

@@ -19,7 +19,7 @@ class Docente extends Model
     ];
     public function user()
     {
-        return $this->belongsTo(User::class, 'ID_usuario');
+        return $this->belongsTo(User::class, 'ID_usuario', 'ID_usuario');
     }
     public function grupoEmpresas()
     {

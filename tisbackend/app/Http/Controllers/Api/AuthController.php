@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Hashing\HashManager;
+
+
 class AuthController extends Controller
+
 {
     public function register(Request $request)
     {
@@ -213,4 +216,20 @@ class AuthController extends Controller
     $response["error"] = "No hay usuario autenticado";
     return response()->json($response, 401); // 401 Unauthorized si no hay usuario autenticado
 }
+
+
+public function getAuthenticatedUser()
+    {
+        if (Auth::check()) {
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'ID_usuario' => Auth::user()->id,
+                    'nombre' => Auth::user()->name,
+                ],
+            ]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'No autenticado'], 401);
+    }
 }

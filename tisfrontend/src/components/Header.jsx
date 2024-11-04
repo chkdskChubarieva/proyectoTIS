@@ -6,9 +6,9 @@ import BotonUserEst from "./BotonUserEst";
 import BotonUserDoc from "./BotonUserDoc";
 
 
-
 const Header = () => {
     const location = useLocation(); // Obtenemos la ruta actual
+    
     // insertaar aqui las rutas donde se debe mostrar un boton en especifico
     const rutasLogin = ["/login"];
     const rutasRegister = ["/register", "/"];
