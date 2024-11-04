@@ -28,9 +28,7 @@ const InicioEst = () => {
 
     
     return (
-        <>
-            <Header />
-            <Navbar />
+        <section className="form-container">
             <div className="mx-auto w-fit">
                 <div className="p-3 my-4 text-center rounded-md bg-primary-600">
                     <span className="text-xl font-semibold text-primary-100">
@@ -86,7 +84,7 @@ const InicioEst = () => {
                     </section>
                 </article>
             </div>
-        </>
+        </section>
     );
 };
 

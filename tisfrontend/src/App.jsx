@@ -7,9 +7,11 @@ import Register from "./pageauth/Register";
 import InicioEst from "./page_estudiante/InicioEst";
 import InicioDoc from "./page_docente/InicioDoc";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-//Auth
 import Login from "./pageauth/Login";
 
+import JoinGroupForm from "./components/grupo-empresa/JoinGroupForm";
+import RegistroEmpresa from "./components/grupo-empresa/RegistroEmpresa";
+import SprintPlanning from "./components/grupo-empresa/SprintPlanning";
 
 import './app.css'
 
@@ -26,7 +28,13 @@ export const App = () => {
                 </Route>
                 <Route element={<ProtectedRoutes/>}>
                     <Route path="/estudiante" element={<LayoutEstudiante/>}>
-                        <Route index element={<InicioEst/>} />
+                        <Route path="" element={<InicioEst />} />
+                        <Route path="info" element={<JoinGroupForm />} />
+                        <Route path="registro" element={<RegistroEmpresa />} />
+                        <Route path="unirse" element={<JoinGroupForm />} />
+                        <Route path="calendario" element={<JoinGroupForm />} />
+                        <Route path="registro-sprint" element={<SprintPlanning />} />
+                        <Route path="product-backlog" element={<JoinGroupForm />} />
                     </Route>
                     <Route path="/docente" element={<LayoutDocente />}>
                         <Route index element={<InicioDoc />} />

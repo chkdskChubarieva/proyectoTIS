@@ -22,4 +22,26 @@ class EstudianteController extends Controller
             'cod_sis'=> $user->estudiante->cod_sis,
         ]);
     }
+
+
+    public function updateGrupoEmpresa(Request $request, $id)
+    {
+        // Validar la entrada
+        $request->validate([
+            'ID_empresa' => 'required|exists:grupo_empresas,ID_empresa',
+        ]);
+
+        // Buscar al estudiante por su ID
+        $estudiante = Estudiante::find($id);
+        
+        if (!$estudiante) {
+            return response()->json(['message' => 'Estudiante no encontrado'], 404);
+        }
+
+        // Actualizar el ID de la empresa
+        $estudiante->ID_empresa = $request->ID_empresa;
+        $estudiante->save();
+
+        return response()->json(['message' => 'ID de empresa actualizado exitosamente', 'estudiante' => $estudiante]);
+    }
 }

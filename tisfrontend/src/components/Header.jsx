@@ -9,7 +9,7 @@ import AuthUser from "../pageauth/AuthUser";
 import Config from "../Config";
 
 const Header = () => {
-    const location = useLocation(); // Obtenemos la ruta actual
+    const location = useLocation(); 
 
     const { getLogout } = AuthUser();
 
