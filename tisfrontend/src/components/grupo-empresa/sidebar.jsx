@@ -62,7 +62,7 @@ const Sidebar = () => {
             )}
 
             <div>
-                <Link to="./estudiante" className="active">
+                <Link to="/estudiante" className={({ isActive }) => (isActive ? 'active' : '') || 'default-class'}>
                     <span role="img" aria-label="home" className='nav-aside'>
                         <img src={HomeIcon} alt="Inicio" />
                         <p>Inicio</p>
@@ -79,7 +79,7 @@ const Sidebar = () => {
                 </span>
                 <ul>
                     <li>
-                        <Link to="./info" className={({ isActive }) => (isActive ? 'active' : '')}>
+                        <Link to="./info" className={({ isActive }) => (isActive ? 'active' : '') || 'default-class'}>
                             <span role="img" aria-label="info" className='nav-aside'>
                                 <img src={Vector} alt="Información" />
                                 <p>Información</p>
@@ -89,7 +89,7 @@ const Sidebar = () => {
                     {!grupoEmpresa && (
                         <>
                             <li>
-                                <Link to="./registro" className={({ isActive }) => (isActive ? 'active' : '')}>
+                                <Link to="./registro" className={({ isActive }) => (isActive ? 'active' : '') || 'default-class'}>
                                     <span role="img" aria-label="register" className='nav-aside'>
                                         <img src={Address} alt="Registro" />
                                         <p>Registro</p>
@@ -97,7 +97,7 @@ const Sidebar = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="./unirse" className={({ isActive }) => (isActive ? 'active' : '')}>
+                                <Link to="./unirse" className={({ isActive }) => (isActive ? 'active' : '') || 'default-class'}>
                                     <span role="img" aria-label="join" className='nav-aside'>
                                         <img src={Bracket} alt="Unirse" />
                                         <p>Unirse</p>
@@ -116,7 +116,7 @@ const Sidebar = () => {
                 </span>
                 <ul>
                     <li>
-                        <Link to="./product-backlog" className={({ isActive }) => (isActive ? 'active' : '')}>
+                        <Link to="./product-backlog" className={({ isActive }) => (isActive ? 'active' : '') || 'default-class'}>
                             <span role="img" aria-label="calendar" className='nav-aside'>
                                 <img src={Calendar} alt="Calendario" />
                                 <p>Product backlog</p>
@@ -124,7 +124,7 @@ const Sidebar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="./registro-sprint" className={({ isActive }) => (isActive ? 'active' : '')}>
+                        <Link to="./registro-sprint" className={({ isActive }) => (isActive ? 'active' : '') || 'default-class'}>
                             <span role="img" aria-label="calendar" className='nav-aside'>
                                 <img src={Calendar} alt="Calendario" />
                                 <p>Registro Sprint</p>
@@ -132,7 +132,7 @@ const Sidebar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="./calendario" className={({ isActive }) => (isActive ? 'active' : '')}>
+                        <Link to="./calendario" className={({ isActive }) => (isActive ? 'active' : '') || 'default-class'}>
                             <span role="img" aria-label="calendar" className='nav-aside'>
                                 <img src={Calendar} alt="Calendario" />
                                 <p>Calendario</p>
@@ -143,7 +143,7 @@ const Sidebar = () => {
             </div>
 
             <div>
-                <Link to="./evaluations" className={({ isActive }) => (isActive ? 'active' : '')}>
+                <Link to="./evaluations" className={({ isActive }) => (isActive ? 'active' : '') || 'default-class'}>
                     <span role="img" aria-label="evaluations" className='nav-aside'>
                         <img src={Pencil} alt="Evaluaciones" />
                         <p>Evaluaciones</p>

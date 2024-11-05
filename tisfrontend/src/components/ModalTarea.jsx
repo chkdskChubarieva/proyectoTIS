@@ -57,21 +57,27 @@ const ModalTarea = ({ show, onClose }) => {
             <label>Nombre de la tarea:</label>
             <input type="text"name="contenido_tarea" value={tareaData.contenido_tarea} placeholder='Breve descripción de la tarea' onChange={handleChange} required />
           </div>
-          <div>
-          <label>Estimación:</label>
-          <select name="estimacion" value={tareaData.estimacion} onChange={handleChange} required>
-            <option value="">Seleccione estimación</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="5">5</option>
-            <option value="8">8</option>
-            <option value="13">13</option>
-            <option value="20">20</option>
-            <option value="40">40</option>
-            <option value="100">100</option>
-          </select>
-          </div>  
+          <div className='container-user-task'>
+            <div>
+              <label>Estudiante:</label>
+              <input type="text"name="contenido_tarea" value={tareaData.contenido_tarea} placeholder='Breve descripción de la tarea' onChange={handleChange} required />
+            </div>
+            <div>
+            <label>Estimación:</label>
+            <select name="estimacion" value={tareaData.estimacion} onChange={handleChange} required>
+              <option value="">Seleccione estimación</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="5">5</option>
+              <option value="8">8</option>
+              <option value="13">13</option>
+              <option value="20">20</option>
+              <option value="40">40</option>
+              <option value="100">100</option>
+            </select>
+            </div>  
+          </div>
           <section className='container-button-tarea'>
             <button type="submit">Guardar</button>
             <button type="button" onClick={onClose}>Cancelar</button>

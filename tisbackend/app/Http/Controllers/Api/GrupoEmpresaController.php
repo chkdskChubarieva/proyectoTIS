@@ -21,9 +21,9 @@ class GrupoEmpresaController extends Controller
             'codigo' => $request->codigo,
             'logo_empresa' => $request->logo_empresa
         ]);
-        ProductBacklog::create([
-            'ID_empresa' => $grupoEmpresa->ID_empresa, // Relacionar con la tabla 'users'
-        ]);
+        // ProductBacklog::create([
+        //     'ID_empresa' => $grupoEmpresa->ID_empresa, // Relacionar con la tabla 'users'
+        // ]);
 
 
 

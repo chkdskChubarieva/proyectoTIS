@@ -45,6 +45,12 @@
   font-weight: bold;
 }
 
+
+.container-user-task {
+  display: flex;
+  
+}
+
 .modal-content input[type="number"],
 .modal-content input[type="text"],
 .modal-content textarea,

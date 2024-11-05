@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './JoinGroupForm.css';
 import Icon from "../../assets/empresa/zorro.png";
-import CodeChecker from '../CodeChecker';
 
 const initialState = {
     groupCode: '',
@@ -26,49 +26,53 @@ function reducer(state, action) {
 const JoinGroupForm = () => {
     const userData = JSON.parse(sessionStorage.getItem('user')); 
     const [state, dispatch] = useReducer(reducer, initialState);
+    const navigate = useNavigate();
 
     const handleJoinClick = async () => {
-
-        const userID = userData ? userData.ID_usuario : null;
-        console.log(userID);
         if (!state.groupCode) {
             dispatch({ type: 'SET_MESSAGE', payload: 'Por favor ingresa un código de grupo', error: true });
             return;
         }
 
-      
-        const groupData = await getGroupData(state.groupCode, userID); 
+        const userID = userData?.ID_usuario;
+        if (!userID) {
+            dispatch({ type: 'SET_MESSAGE', payload: 'No se pudo obtener la información del usuario.', error: true });
+            return;
+        }
+
+        const groupData = await fetchGroupData(state.groupCode, userID);
         if (groupData) {
-            console.log(userID)
-            await updateEstudiante(userID, groupData.ID_empresa);
+            await joinGroup(userID, groupData.ID_empresa);
             dispatch({ type: 'SET_MESSAGE', payload: `Te has unido exitosamente al grupo con código: ${state.groupCode}`, error: false });
+            navigate('/estudiante/registro-sprint');
+            window.location.reload();
         } else {
             dispatch({ type: 'SET_MESSAGE', payload: 'Código de grupo no válido', error: true });
         }
     };
-    const updateEstudiante = async (userID, idEmpresa) => {
+
+    const joinGroup = async (userID, idEmpresa) => {
         try {
             const response = await axios.put(`http://localhost:8000/api/v1/estudiantes/${userID}/grupo-empresa`, {
                 ID_empresa: idEmpresa,
             });
-    
-            console.log(response.data); 
+            console.log("Estudiante actualizado:", response.data); 
         } catch (error) {
+            dispatch({ type: 'SET_MESSAGE', payload: 'Error al actualizar el estudiante', error: true });
             console.error("Error al actualizar el estudiante:", error);
         }
     };
 
-    const getGroupData = async (code, userID) => {
+    const fetchGroupData = async (code, userID) => {
         try {
-            const response = await axios.get(`http://localhost:8000/api/v1/grupo-empresa/data/${code}?userID=${userID}`); // Enviar el userID
+            const response = await axios.get(`http://localhost:8000/api/v1/grupo-empresa/data/${code}?userID=${userID}`);
             console.log("Datos de la grupo empresa:", response.data);
             return response.data;
         } catch (error) {
             console.error("Error al obtener datos de la grupo empresa:", error);
-            return null; 
+            return null;
         }
     };
-
 
     return (
         <section className="form-container">
@@ -85,7 +89,12 @@ const JoinGroupForm = () => {
                     />
                     <button onClick={handleJoinClick} className="button">Unirse</button>
                 </article>
-                <img src={Icon} alt="" />
+                <img src={Icon} alt="Logo de grupo" className="form-icon"/>
+                {state.message && (
+                    <p className={`message ${state.error ? 'error' : 'success'}`}>
+                        {state.message}
+                    </p>
+                )}
             </div>
         </section>
     );
