@@ -66,16 +66,16 @@ const InicioDoc = () => {
                             
                             <InfoUsuario
                                 icono={<i className="fa-solid fa-building"></i>}
-                                titulo={"Grupo-empresa: "}
-                                info={"VistaSoft"}
+                                titulo={"Grupo Empresas Asignadas: "}
+                                info={"3"}
                             />
 
                             <InfoUsuario
                                 icono={
                                     <i className="fa-solid fa-graduation-cap"></i>
                                 }
-                                titulo={"Docente: "}
-                                info={"David Escalera"}
+                                titulo={"Info por asignar "}
+                                info={"(Poner alguna info)"}
                             
                             />
                             

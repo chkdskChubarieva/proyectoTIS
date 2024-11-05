@@ -28,7 +28,7 @@ class HistoriaController extends Controller
         $validator = Validator::make($request->all(), [
             "desc_historia"=> "required",
             "titulo"=> "required",
-            "ID_pb"=> "required",
+          //  "ID_pb"=> "required",
         ]);
 
         if ($validator->fails()) {
@@ -42,6 +42,8 @@ class HistoriaController extends Controller
         $input = $request->all();
         // Cifrar la contraseña
         // Insertar datos en la tabla 'users'
+
+        
         $historia = HistoriaUsuario::create([
             'titulo' => $input['titulo'],
             'desc_historia' => $input['desc_historia'],

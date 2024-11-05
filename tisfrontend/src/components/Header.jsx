@@ -12,7 +12,7 @@ const Header = () => {
     // insertaar aqui las rutas donde se debe mostrar un boton en especifico
     const rutasLogin = ["/login"];
     const rutasRegister = ["/register", "/"];
-    const rutasEstudiante = ["/estudiante"];
+    const rutasEstudiante = ["/estudiante", "/registro", "/info", "/unirse"];
     const rutasDocente = ["/docente"];
 
     // aqui tambien

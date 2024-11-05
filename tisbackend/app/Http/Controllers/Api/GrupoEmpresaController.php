@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\GrupoEmpresa;
+use App\Models\ProductBacklog;
 use Illuminate\Http\JsonResponse;
 
 class GrupoEmpresaController extends Controller
@@ -20,6 +21,12 @@ class GrupoEmpresaController extends Controller
             'codigo' => $request->codigo,
             'logo_empresa' => $request->logo_empresa
         ]);
+        ProductBacklog::create([
+            'ID_empresa' => $grupoEmpresa->ID_empresa, // Relacionar con la tabla 'users'
+        ]);
+
+
+
 
         // $estudiante = Estudiante::where('ID_usuario', auth()->id())->first();
         // if ($estudiante) {

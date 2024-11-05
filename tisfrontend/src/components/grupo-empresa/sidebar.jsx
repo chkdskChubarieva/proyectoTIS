@@ -23,7 +23,7 @@ const Sidebar = () => {
                 <p>Grupo empresa 1</p>
             </div>}
             <div>
-                <Link to="/" exact="true" activeClassName="active">
+                <Link to="/estudiante" exact="true" activeClassName="active">
                     <span role="img" aria-label="home" className='nav-aside'>
                         <img src={HomeIcon} alt="Inicio" />
                         <p>Inicio</p>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import './RegistroEmpresa.css';
 import { useNavigate } from 'react-router-dom';
@@ -95,6 +95,7 @@ const RegistroEmpresa = () => {
     };
 
     return (
+    <>
         <section className="form-container">
             <div className="registro-container">
                 <h2>Registro de grupo-empresa</h2>
@@ -189,6 +190,9 @@ const RegistroEmpresa = () => {
                 </form>
             </div>
         </section>
+    </>
+        
+        
     );
 };
 
