@@ -2,16 +2,22 @@ import { useState } from "react";
 import ItemBacklog from "./ItemBacklog";
 import ItemTablaSprint from "./ItemTablaSprint";
 import ModalCrearHU from "./ModalCrearHU";
+import ModalNuevoSprint from "./ModalNuevoSprint";
 import "./ProductBacklog.css";
 
 const ProductBacklog = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalSprintOpen, setIsModalSprintOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const openModalSprint = () => setIsModalSprintOpen(true);
+  const closeModalSprint = () => setIsModalSprintOpen(false);
+
   return (
     <>
+      {isModalSprintOpen && <ModalNuevoSprint closeModal={closeModalSprint} />}
       {isModalOpen && <ModalCrearHU closeModal={closeModal} />}
       <div className="product-backlog w-full px-10 py-6">
         <div className="flex justify-between">
@@ -68,6 +74,7 @@ const ProductBacklog = () => {
               <button
                 type="button"
                 className="flex size-6 items-center justify-center rounded border-2 border-primary-200 text-primary-200 transition-colors hover:border-primary-500 hover:text-primary-500"
+                onClick={openModalSprint}
               >
                 <i className="fa-solid fa-plus"></i>
               </button>
