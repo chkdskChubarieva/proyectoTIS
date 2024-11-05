@@ -12,6 +12,7 @@ import Login from "./pageauth/Login";
 import JoinGroupForm from "./components/grupo-empresa/JoinGroupForm";
 import RegistroEmpresa from "./components/grupo-empresa/RegistroEmpresa";
 import SprintPlanning from "./components/grupo-empresa/SprintPlanning";
+import ProductBacklog from "./components/grupo-empresa/ProductBacklog";
 
 import './app.css'
 import PreviaEmpresas from "./page_docente/PreviaEmpresas";
@@ -35,7 +36,7 @@ export const App = () => {
                         <Route path="unirse" element={<JoinGroupForm />} />
                         <Route path="calendario" element={<JoinGroupForm />} />
                         <Route path="registro-sprint" element={<SprintPlanning />} />
-                        <Route path="product-backlog" element={<JoinGroupForm />} />
+                        <Route path="product-backlog" element={<ProductBacklog />} />
                     </Route>
                     <Route path="/docente" element={<LayoutDocente />}>
                         <Route index element={<InicioDoc />} />
