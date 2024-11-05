@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Estudiante;
+use Illuminate\Http\JsonResponse;
 
 class EstudianteController extends Controller
 {
@@ -19,7 +20,7 @@ class EstudianteController extends Controller
             'nombre' => $user->nombre,
             'apellido' => $user->apellido,
             'correo' => $user->correo, 
-            'cod_sis'=> $user->estudiante->cod_sis,
+            'cod_sis'=> $user->estudiante->cod_sis
         ]);
     }
 
@@ -44,4 +45,19 @@ class EstudianteController extends Controller
 
         return response()->json(['message' => 'ID de empresa actualizado exitosamente', 'estudiante' => $estudiante]);
     }
+
+    public function showInfoEstudent(int $id): JsonResponse
+    {
+        $estudiante = Estudiante::with('user')->find($id);
+
+        if (!$estudiante) {
+            return response()->json(['success' => false, 'message' => 'Estudiante no encontrado.'], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $estudiante,
+        ]);
+    }
+
 }

@@ -87,7 +87,6 @@ const JoinGroupForm = () => {
                 </article>
                 <img src={Icon} alt="" />
             </div>
-            {/* <CodeChecker /> */}
         </section>
     );
 };

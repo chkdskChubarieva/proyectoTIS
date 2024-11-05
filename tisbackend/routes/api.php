@@ -25,12 +25,14 @@ Route::prefix('v1')->group(function () {
     Route::post("/auth/login", [AuthController::class, 'login']);
     Route::post("/auth/loginDoc", [AuthController::class, 'loginDoc']);   
     
+    Route::get('/grupo-empresa/{id}', [GrupoEmpresaController::class, 'show']);
     Route::post("/grupo-empresa/register", [GrupoEmpresaController::class, 'store']);
     Route::get('/grupo-empresa/check-code/{code}', [GrupoEmpresaController::class, 'checkCode']);
     Route::get('/tareas', [TareaController::class, 'tareas']);
   
     Route::get('/docentes', [DocenteController::class, 'index']);
     Route::get('/docentes/{id}', [DocenteController::class, 'show']);
+    Route::get('/estudiante/{id}', [EstudianteController::class, 'showInfoEstudent']);
     Route::get('/grupo-empresa/data/{code}', [GrupoEmpresaController::class, 'getGroupData']);
 
     Route::post('/grupo-empresa/join', [GrupoEmpresaController::class, 'joinGroup']);

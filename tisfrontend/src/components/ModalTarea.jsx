@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "./ModalTarea.css"
 
@@ -11,6 +11,18 @@ const ModalTarea = ({ show, onClose }) => {
     ID_estudiante: '',
     ID_historia: '',
   });
+
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [show]);
 
   const handleChange = (e) => {
     setTareaData({ ...tareaData, [e.target.name]: e.target.value });
@@ -39,28 +51,31 @@ const ModalTarea = ({ show, onClose }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Registrar Tarea</h2>
+        <h2>Nueva Tarea</h2>
         <form onSubmit={handleSubmit}>
-          <label>Nro Tarea:</label>
-          <input type="number" name="nro_tarea" value={tareaData.nro_tarea} onChange={handleChange} required />
-
+          <div>
+            <label>Nombre de la tarea:</label>
+            <input type="text"name="contenido_tarea" value={tareaData.contenido_tarea} placeholder='Breve descripción de la tarea' onChange={handleChange} required />
+          </div>
+          <div>
           <label>Estimación:</label>
-          <input type="number" name="estimacion" value={tareaData.estimacion} onChange={handleChange} required />
-
-          <label>Estado:</label>
-          <input type="text" name="estado" value={tareaData.estado} onChange={handleChange} required />
-
-          <label>Contenido de la Tarea:</label>
-          <textarea name="contenido_tarea" value={tareaData.contenido_tarea} onChange={handleChange} required />
-
-          <label>ID Estudiante:</label>
-          <input type="number" name="ID_estudiante" value={tareaData.ID_estudiante} onChange={handleChange} required />
-
-          <label>ID Historia:</label>
-          <input type="number" name="ID_historia" value={tareaData.ID_historia} onChange={handleChange} required />
-
-          <button type="submit">Registrar</button>
-          <button type="button" onClick={onClose}>Cerrar</button>
+          <select name="estimacion" value={tareaData.estimacion} onChange={handleChange} required>
+            <option value="">Seleccione estimación</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="8">8</option>
+            <option value="13">13</option>
+            <option value="20">20</option>
+            <option value="40">40</option>
+            <option value="100">100</option>
+          </select>
+          </div>  
+          <section className='container-button-tarea'>
+            <button type="submit">Guardar</button>
+            <button type="button" onClick={onClose}>Cancelar</button>
+          </section>
         </form>
       </div>
     </div>

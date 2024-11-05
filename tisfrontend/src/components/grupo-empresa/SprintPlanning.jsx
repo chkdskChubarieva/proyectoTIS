@@ -105,12 +105,8 @@ const SprintPlanning = () => {
                 <div>
                     {story.title}
                 </div>
-                <button className='button-story' onClick={() => handleAddStory(story)}><img src={ButtonStory} alt="" /></button>
-                {modalTask && <div onClick={() => setModalTask(false)}>
-                    holas
-                    {selected.title}
-                    </div>
-                }
+                <button className='button-story' onClick={handleShowModal}><img src={ButtonStory} alt="" /></button>
+                
             </div>
         ));
     };
@@ -144,11 +140,7 @@ const SprintPlanning = () => {
                 </div>
             </div>
 
-            tarea
-            <div>
-            <button onClick={handleShowModal}>Registrar Tarea</button>
             <ModalTarea show={showModal} onClose={handleCloseModal} />
-            </div>
             {/* <TaskFetcher/>
             <ListaTareas/> */}
         </div>

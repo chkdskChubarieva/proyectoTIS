@@ -82,5 +82,23 @@ class GrupoEmpresaController extends Controller
     
         return response()->json(['success' => true, 'message' => 'Te has unido al grupo-empresa exitosamente.']);
     }
+
+
+    public function show($id)
+    {
+        $grupoEmpresa = GrupoEmpresa::find($id);
+
+        if (!$grupoEmpresa) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Grupo Empresa not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $grupoEmpresa,
+        ]);
+    }
     
 }

@@ -12,11 +12,16 @@
 
 .logotipo-grupoempresa{
     display: flex;
+    align-items: center;
+    padding: 10px 0 10px 30px;
 }
 
 .logotipo-grupoempresa img {
-    min-width: 60;
-    min-height: 60;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #99AAB7;
+
 }
 
 .logotipo-grupoempresa p {
