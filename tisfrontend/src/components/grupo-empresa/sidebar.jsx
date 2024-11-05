@@ -62,7 +62,7 @@ const Sidebar = () => {
             )}
 
             <div>
-                <Link to="./" className="active">
+                <Link to="./estudiante" className="active">
                     <span role="img" aria-label="home" className='nav-aside'>
                         <img src={HomeIcon} alt="Inicio" />
                         <p>Inicio</p>

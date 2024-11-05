@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('product_backlogs', function (Blueprint $table) {
             $table->id('ID_pb');
-            $table->integer('puntuacion_pb');
-            $table->text('observacion_pb');
+            //$table->integer('puntuacion_pb');
+            //$table->text('observacion_pb');
             $table->unsignedBigInteger('ID_empresa');
 
             $table->foreign('ID_empresa')->references('ID_empresa')->on('grupo_empresas')->onDelete('cascade');

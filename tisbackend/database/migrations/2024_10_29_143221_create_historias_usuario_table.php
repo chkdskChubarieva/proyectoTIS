@@ -11,12 +11,12 @@ return new class extends Migration
         Schema::create('historias_usuario', function (Blueprint $table) {
             $table->id('ID_historia');
             $table->text('desc_historia');
-            $table->integer('prioridad');
             $table->string('titulo');
-            $table->unsignedBigInteger('ID_sprint');
-
+            $table->unsignedBigInteger('ID_sprint')->nullable();
             $table->foreign('ID_sprint')->references('ID_sprint')->on('sprint_backlogs')->onDelete('cascade');
-
+            
+            $table->unsignedBigInteger('ID_pb');
+            $table->foreign('ID_pb')->references('ID_pb')->on('product_backlogs')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -9,9 +9,10 @@ use App\Http\Controllers\Api\Estudiante\EmpresaController;
 use App\Http\Controllers\Api\Docente\EmpresaController as EmpresaDocente;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use App\Http\Controllers\Api\Estudiante\EstudianteController;
+use App\Http\Controllers\Api\Docente\DocenteController;
 use App\Http\Controllers\Api\GrupoEmpresaController;
 use App\Http\Controllers\Api\TareaController;
-use App\Http\Controllers\Api\DocenteController;
+
 
 
 //Rutas publicas
@@ -48,6 +49,7 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('/estudiante/empresa', EmpresaController::class);
 
         //:: rol docente
+        Route::get('/docente/getInfoDoc', [DocenteController::class, 'getInfoDoc']);
         Route::apiResource('/docente/empresa', EmpresaDocente::class);
 
         //::auth

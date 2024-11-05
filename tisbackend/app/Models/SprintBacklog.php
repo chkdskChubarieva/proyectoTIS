@@ -24,9 +24,6 @@ class SprintBacklog extends Model
         return $this->hasMany(HistoriaUsuario::class, 'ID_sprint');
     }
 
-    public function productBacklog()
-    {
-        return $this->belongsTo(ProductBacklog::class, 'ID_pb');
-    }
+    
 }
 

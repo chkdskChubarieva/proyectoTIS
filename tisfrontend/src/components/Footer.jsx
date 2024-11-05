@@ -1,4 +1,3 @@
-import React from 'react'
 
 import logo_vistasoft from '../assets/img/logo-vistasoft.png'
 

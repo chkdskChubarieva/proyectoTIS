@@ -17,7 +17,8 @@ export default{
     getLoginDoc:(data)=>axios.post(`${base_api_url}/auth/loginDoc`,data),
     getLogout:()=>axios.post(`${base_api_url}/auth/logout`),
     
-    getInfoEst:()=>axios.get(`${base_api_url}/estudiante/getInfoEst`)
+    getInfoEst:()=>axios.get(`${base_api_url}/estudiante/getInfoEst`),
+    getInfoDoc:()=>axios.get(`${base_api_url}/docente/getInfoDoc`)
     
     
 }
