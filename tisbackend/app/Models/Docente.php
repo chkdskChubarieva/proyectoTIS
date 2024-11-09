@@ -5,7 +5,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\GrupoEmpresa;
 class Docente extends Model
 {
     use HasFactory;
@@ -23,6 +23,6 @@ class Docente extends Model
     }
     public function grupoEmpresas()
     {
-        return $this->hasMany(Grupo_Empresa::class, 'ID_docente');
+        return $this->hasMany(GrupoEmpresa::class, 'ID_docente');
     }
 }

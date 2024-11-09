@@ -313,7 +313,7 @@ const Login = () => {
                         <br />
                         <input
                             ref={passwordInputRef2}
-                            type="passwor d"
+                            type="password"
                             id="password-2"
                             className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
                             value={contrasenia}

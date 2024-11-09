@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
+
 const ModalCrearHU = ({ closeModal }) => {
+  //const [pb, setPb] = useState({});
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-      <form
-        action=""
-        className="max-w-3xl rounded-md bg-neutral-200 px-8 py-5 shadow"
-      >
+      <form action="" className="rounded-md bg-neutral-200 px-8 py-5 shadow">
         <span className="mb-4 flex justify-center text-2xl font-semibold text-primary-800">
           Nueva historia de usuario
         </span>
@@ -20,7 +20,8 @@ const ModalCrearHU = ({ closeModal }) => {
             <br />
             <input
               type="text"
-              className="my-2 rounded-md border border-primary-500 p-2"
+              className="my-2 w-64 rounded-md border border-primary-500 p-2"
+              placeholder="Titulo de la historia de usuario."
             />
           </div>
 
@@ -59,6 +60,7 @@ const ModalCrearHU = ({ closeModal }) => {
           id="descripcion"
           className="my-2 w-full resize-none rounded-md border border-primary-500 p-2"
           rows="3"
+          placeholder="Agrega una descripción para que otros usuarios puedan entender mejor esta historia de usuario."
         ></textarea>
 
         <section className="flex gap-2 font-semibold">

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Docente;
+use App\Models\GrupoEmpresa;
 use Illuminate\Http\JsonResponse;
 
 class DocenteController extends Controller
@@ -16,11 +17,17 @@ class DocenteController extends Controller
      */
     public function getInfoDoc() {
         $user = Auth::user();
+        $docenteId =$user->docente->ID_docente;
+        
+        // Filtrar las grupo empresas según el ID del docente
+        $grupoEmpresas = GrupoEmpresa::where('ID_docente', $docenteId)->count();
+            
         return response()->json([
             'nombre' => $user->nombre,
             'apellido' => $user->apellido,
             'correo' => $user->correo, 
             'nombre_usuario'=> $user->docente->nombre_usuario,
+            'nroGrupoEmpresas'=> $grupoEmpresas,
         ]);
     }
 

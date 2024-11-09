@@ -13,40 +13,42 @@ import JoinGroupForm from "./components/grupo-empresa/JoinGroupForm";
 import RegistroEmpresa from "./components/grupo-empresa/RegistroEmpresa";
 import SprintPlanning from "./components/grupo-empresa/SprintPlanning";
 import ProductBacklog from "./components/grupo-empresa/ProductBacklog";
+import InfoGrupoEmpresa from "./page_docente/InfoGrupoEmpresa";
 
-import './app.css'
+import "./app.css";
 import PreviaEmpresas from "./page_docente/PreviaEmpresas";
-
-
+import Cloudinary from "./components/Cloudinary";
+//import InfoEmpresa from "./page_docente/InfoEmpresa";
 
 export const App = () => {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<LayoutPublic />}>
-                    <Route index element={<PageHome />} />
-                    <Route path="/login" element={<Login/>} />
-                    <Route path="/register" element={<Register/>} />
-                </Route>
-                <Route element={<ProtectedRoutes/>}>
-                    <Route path="/estudiante" element={<LayoutEstudiante/>}>
-                        <Route path="" element={<InicioEst />} />
-                        <Route path="info" element={<JoinGroupForm />} />
-                        <Route path="registro" element={<RegistroEmpresa />} />
-                        <Route path="unirse" element={<JoinGroupForm />} />
-                        <Route path="calendario" element={<JoinGroupForm />} />
-                        <Route path="registro-sprint" element={<SprintPlanning />} />
-                        <Route path="product-backlog" element={<ProductBacklog />} />
-                    </Route>
-                    <Route path="/docente" element={<LayoutDocente />}>
-                        <Route index element={<InicioDoc />} />
-                        <Route path="/docente/empresas" element={<PreviaEmpresas/>} />
-                    </Route>
-                </Route>
-            </Routes>
-        </Router>
-    );
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<LayoutPublic />}>
+          <Route index element={<PageHome />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/prueba" element={<Cloudinary />} />
+        </Route>
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/estudiante" element={<LayoutEstudiante />}>
+            <Route path="" element={<InicioEst />} />
+            <Route path="info" element={<JoinGroupForm />} />
+            <Route path="registro" element={<RegistroEmpresa />} />
+            <Route path="unirse" element={<JoinGroupForm />} />
+            <Route path="calendario" element={<JoinGroupForm />} />
+            <Route path="registro-sprint" element={<SprintPlanning />} />
+            <Route path="product-backlog" element={<ProductBacklog />} />
+          </Route>
+          <Route path="/docente" element={<LayoutDocente />}>
+            <Route index element={<InicioDoc />} />
+            <Route path="/docente/empresas" element={<PreviaEmpresas />} />
+            <Route path="/docente/empresas/:id" element={<InfoGrupoEmpresa />} />
+          </Route>
+        </Route>
+      </Routes>
+    </Router>
+  );
 };
-
 
 export default App; // Exportación por defecto

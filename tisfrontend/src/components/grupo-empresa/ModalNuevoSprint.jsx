@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-const ModalNuevoSprint = ({closeModal}) => {
+const ModalNuevoSprint = ({ closeModal }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
       <form action="" className="rounded-md bg-neutral-200 px-8 py-5 shadow">
@@ -18,6 +18,7 @@ const ModalNuevoSprint = ({closeModal}) => {
             id="nombre_sprint"
             type="text"
             className="my-2 w-full rounded-md border border-primary-500 p-2"
+            placeholder="Ej: Sprint #1"
           />
         </div>
 
@@ -34,7 +35,7 @@ const ModalNuevoSprint = ({closeModal}) => {
               type="date"
               name=""
               id="fecha_ini"
-              className="my-2 w-full rounded-md border border-primary-500 p-2"
+              className="my-2 w-full rounded-md border border-primary-500 px-2 py-1"
             />
           </div>
 
@@ -50,12 +51,12 @@ const ModalNuevoSprint = ({closeModal}) => {
               type="date"
               name=""
               id="fecha_fin"
-              className="my-2 w-full rounded-md border border-primary-500 p-2"
+              className="my-2 w-full rounded-md border border-primary-500 px-2 py-1"
             />
           </div>
         </section>
 
-        <section className="flex gap-2 font-semibold">
+        <section className="mt-2 flex gap-2 font-semibold">
           <button
             type="submit"
             className="w-full rounded bg-primary-600 p-2 text-white transition-colors hover:bg-primary-500"

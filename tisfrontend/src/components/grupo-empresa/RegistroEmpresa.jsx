@@ -86,7 +86,7 @@ const RegistroEmpresa = () => {
                 axios.get(`http://localhost:8000/api/v1/grupo-empresa/${empresaID}`)
                 .then(responseEmpresa => {
                     console.log(responseEmpresa.data.data);
-                    setEmpresaData(responseEmpresa.data.data);
+                    setempresaData(responseEmpresa.data.data);
                 })
                 .catch(error => {
                     console.error("Error fetching empresa data:", error);

@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Estudiante\EstudianteController;
 use App\Http\Controllers\Api\Docente\DocenteController;
 use App\Http\Controllers\Api\GrupoEmpresaController;
 use App\Http\Controllers\Api\TareaController;
+use App\Http\Controllers\Api\Empresa\HistoriaController;
 
 
 
@@ -26,23 +27,14 @@ Route::prefix('v1')->group(function () {
     Route::post("/auth/login", [AuthController::class, 'login']);
     Route::post("/auth/loginDoc", [AuthController::class, 'loginDoc']);   
     
-    Route::get('/grupo-empresa/{id}', [GrupoEmpresaController::class, 'show']);
-    Route::post("/grupo-empresa/register", [GrupoEmpresaController::class, 'store']);
-    Route::get('/grupo-empresa/check-code/{code}', [GrupoEmpresaController::class, 'checkCode']);
-    Route::get('/tareas', [TareaController::class, 'tareas']);
-  
-    Route::get('/docentes', [DocenteController::class, 'index']);
-    Route::get('/docentes/{id}', [DocenteController::class, 'show']);
-    Route::get('/estudiante/{id}', [EstudianteController::class, 'showInfoEstudent']);
-    Route::get('/grupo-empresa/data/{code}', [GrupoEmpresaController::class, 'getGroupData']);
-
-    Route::post('/grupo-empresa/join', [GrupoEmpresaController::class, 'joinGroup']);
-
-    Route::put('/estudiantes/{id}/grupo-empresa', [EstudianteController::class, 'updateGrupoEmpresa']);
+   
     Route::middleware('auth:sanctum')->get('/auth/user', [AuthController::class, 'getAuthenticatedUser']);
 
     //Rutas privadas
     Route::group(['middleware' => 'auth:sanctum'], function () {
+        
+        Route::get('/docente/empresas', [GrupoEmpresaController::class, 'getEmpresas']);
+        Route::get('/docente/empresas/{id}', [GrupoEmpresaController::class, 'findEmpresa']);
         //:: rol estudiante
         //Route::apiResource('/estudiante/getInfoEst', EstudianteController::class);
         Route::get('/estudiante/getInfoEst', [EstudianteController::class, 'getInfoEst']);
@@ -54,6 +46,24 @@ Route::prefix('v1')->group(function () {
 
         //::auth
         Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+        Route::get('/grupo-empresa/{id}', [GrupoEmpresaController::class, 'show']);
+        Route::post("/grupo-empresa/register", [GrupoEmpresaController::class, 'store']);
+        Route::get('/grupo-empresa/check-code/{code}', [GrupoEmpresaController::class, 'checkCode']);
+        Route::get('/tareas', [TareaController::class, 'tareas']);
+      
+        Route::get('/docentes', [DocenteController::class, 'index']);
+        
+        Route::get('/docentes/{id}', [DocenteController::class, 'show']);
+        Route::get('/estudiante/{id}', [EstudianteController::class, 'showInfoEstudent']);
+        Route::get('/grupo-empresa/data/{code}', [GrupoEmpresaController::class, 'getGroupData']);
+    
+        Route::post('/grupo-empresa/join', [GrupoEmpresaController::class, 'joinGroup']);
+    
+        Route::put('/estudiantes/{id}/grupo-empresa', [EstudianteController::class, 'updateGrupoEmpresa']);
+
+        Route::get('/estudiantes/{id}/grupo-empresa/getInfoPb', [GrupoEmpresaController::class, 'getInfoPb']);
+        
     });
 });
 

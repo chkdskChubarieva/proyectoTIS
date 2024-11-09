@@ -1,54 +1,54 @@
-import Header from "../components/Header";
-import Navbar from "../components/Navbar";
+import { useEffect, useState } from "react";
 import CardGrupoEmpresa from "../components/CardGrupoEmpresa";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PreviaEmpresas = () => {
+  const [grupoEmpresas, setGrupoEmpresas] = useState([]);
+  const base_api_url = "http://localhost:8000/api/v1";
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(`${base_api_url}/docente/empresas`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      .then((response) => {
+        setGrupoEmpresas(response.data);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las grupo empresas:", error);
+      });
+  }, []);
+
+  const handleCardClick = (ID_empresa) => {
+    navigate(`/docente/empresas/${ID_empresa}`);
+  };
+
   return (
     <>
-      <Header />
-      <Navbar />
-      <div className="container mx-auto">
+      <div className="container mx-auto bg-white px-6">
         <div className="my-4 rounded-md bg-primary-600 p-3 text-center">
-          <span className="text-xl font-semibold text-primary-100">
+          <span className="text-xl font-semibold text-white">
             Proyectos designados
           </span>
         </div>
-
         <article className="container grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          <CardGrupoEmpresa
-            imagen={
-              "https://img.freepik.com/foto-gratis/belleza-otonal-abstracta-patron-venas-hoja-multicolor-generado-ia_188544-9871.jpg"
-            }
-            nombreGrupoEmpresa={"VistaSoft Solutions"}
-          />
-
-          <CardGrupoEmpresa
-            imagen={
-              "https://techcrunch.com/wp-content/uploads/2021/07/GettyImages-1207206237.jpg"
-            }
-            nombreGrupoEmpresa={"Google"}
-          />
-
-          <CardGrupoEmpresa
-            imagen={
-              "https://images.pexels.com/photos/147411/italy-mountains-dawn-daybreak-147411.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            }
-            nombreGrupoEmpresa={"VistaSoft Solutions"}
-          />
-
-          <CardGrupoEmpresa
-            imagen={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcu8AuAutwd4IjxWlpddvPVnAv98ZhLPaovA&s"
-            }
-            nombreGrupoEmpresa={"Microsoft"}
-          />
-
-          <CardGrupoEmpresa
-            imagen={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcu8AuAutwd4IjxWlpddvPVnAv98ZhLPaovA&s"
-            }
-            nombreGrupoEmpresa={"Microsoft"}
-          />
+          {grupoEmpresas.length > 0 ? (
+            grupoEmpresas.map((empresa) => (
+              <div
+                key={empresa.ID_empresa}
+                onClick={() => handleCardClick(empresa.ID_empresa)}
+              >
+                <CardGrupoEmpresa
+                  imagen={empresa.logo_empresa || "default-image-url.jpg"}
+                  nombreGrupoEmpresa={empresa.nombre_empresa}
+                />
+              </div>
+            ))
+          ) : (
+            <p>No hay grupo empresas registradas</p>
+          )}
         </article>
       </div>
     </>

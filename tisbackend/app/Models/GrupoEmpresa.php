@@ -22,6 +22,11 @@ class GrupoEmpresa extends Model
         'codigo',
         'logo_empresa'
     ];
+
+    public function productBacklog()
+     {
+         return $this->hasOne(ProductBacklog::class, 'ID_empresa');
+    }
 }
 
 
@@ -46,8 +51,5 @@ class GrupoEmpresa extends Model
 //     {
 //         return $this->hasMany(Estudiante::class, 'ID_empresa');
 //     }
-//     public function productBacklog()
-//     {
-//         return $this->hasOne(ProductBacklog::class, 'ID_empresa');
-//     }
+
 // }
