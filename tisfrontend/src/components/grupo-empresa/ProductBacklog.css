@@ -1,0 +1,13 @@
+.product-backlog {
+  background-color: #fff;
+}
+
+.tabla-backlog {
+  min-width: 400px;
+  /*max-width: 700px;*/
+}
+
+.tabla-sprint {
+  width: 250px;
+  height: fit-content;
+}

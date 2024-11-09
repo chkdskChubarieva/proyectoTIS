@@ -1,0 +1,5 @@
+.background { /* colocar esta clase al div que se quiera poner una imagen como fondo*/
+  background-image: url(../assets/img/background-blur-umss-d.jpg);
+  background-size: cover;
+  background-position: center;
+}
