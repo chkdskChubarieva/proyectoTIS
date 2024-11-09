@@ -93,6 +93,8 @@ const RegistroEmpresa = () => {
                 });
 
                 setSuccess(true);
+
+                
                 
                 navigate('/estudiante/registro-sprint');
                 window.location.reload();
