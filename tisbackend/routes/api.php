@@ -19,65 +19,60 @@ use App\Http\Controllers\Api\SprintController;
 //Rutas publicas
 
 Route::prefix('v1')->group(function () {
-    
+
     //:public
     //Route::get('list', [FrontController::class, 'list']);
     //:auth
     Route::post("/auth/register", [AuthController::class, 'register']);
     Route::post("/auth/registerDoc", [AuthController::class, 'registerDoc']);
     Route::post("/auth/login", [AuthController::class, 'login']);
-    Route::post("/auth/loginDoc", [AuthController::class, 'loginDoc']);   
-    
-    Route::get('/grupo-empresa/{id}', [GrupoEmpresaController::class, 'show']);
-    Route::post("/grupo-empresa/register", [GrupoEmpresaController::class, 'store']);
-    Route::get('/grupo-empresa/check-code/{code}', [GrupoEmpresaController::class, 'checkCode']);
-    Route::get('/tareas', [TareaController::class, 'index']);
-    Route::patch('/tareas/{id}/estado', [TareaController::class, 'updateEstado']);
-    
-    Route::get('/docentes', [DocenteController::class, 'index']);
-    Route::get('/docentes/{id}', [DocenteController::class, 'show']);
-    
-    Route::get('/estudiantes', [EstudianteController::class, 'index']);
-    Route::get('/estudiante/{id}', [EstudianteController::class, 'getEstudianteByUserID']);
-    // Route::get('/estudiante/{id}', [EstudianteController::class, 'showInfoEstudent']);
+    Route::post("/auth/loginDoc", [AuthController::class, 'loginDoc']);
 
-    Route::get('/estudiantes/usuario/{ID_usuario}', [EstudianteController::class, 'getEstudianteByUserID']);
-    Route::get('/grupo-empresa/data/{code}', [GrupoEmpresaController::class, 'getGroupData']);
-    Route::get('/product-backlog/{idEmpresa}', [ProductBacklogController::class, 'getBacklogByEmpresa']);
-    Route::post('/product-backlog/register', [ProductBacklogController::class, 'register']);
-
-    Route::get('/sprints/{id}/details', [SprintController::class, 'getSprintDetails']);
-    Route::get('grupo-empresa/{empresaId}/sprints', [GrupoEmpresaController::class, 'getSprintsByGrupoEmpresa']);
-    Route::get('grupo-empresa/{empresaId}/historias', [GrupoEmpresaController::class, 'getHistoriasByGrupoEmpresa']);
-
-    Route::post('/sprints', [SprintController::class, 'store']);
-    Route::post('/historias', [HistoriaUsuarioController::class, 'store']);
-
-    Route::middleware('auth:api')->get('/estudiantes-grupo', [EstudianteController::class, 'getEstudiantesMismoGrupo']);
-    Route::post('/grupo-empresa/join', [GrupoEmpresaController::class, 'joinGroup']);
-    Route::put('/estudiantes/{id}/grupo-empresa', [EstudianteController::class, 'updateGrupoEmpresa']);
-    
-    Route::get('/estudiantes/{id}/grupo-empresa/getInfoPb', [GrupoEmpresaController::class, 'getInfoPb']);
-    
-    
-    
     // Route::get('/tareas', [TareaController::class, 'tareas']);
-
-
-    
-    
-    
-    
     
     Route::middleware('auth:sanctum')->get('/auth/user', [AuthController::class, 'getAuthenticatedUser']);
     //Rutas privadas
     Route::group(['middleware' => 'auth:sanctum'], function () {
-        
+        Route::get('/estudiante/getInfoEst', [EstudianteController::class, 'getInfoEst']);
+        Route::get('/grupo-empresa/{id}', [GrupoEmpresaController::class, 'show']);
+        Route::post("/grupo-empresa/register", [GrupoEmpresaController::class, 'store']);
+        Route::get('/grupo-empresa/check-code/{code}', [GrupoEmpresaController::class, 'checkCode']);
+        Route::get('/tareas', [TareaController::class, 'index']);
+        Route::patch('/tareas/{id}/estado', [TareaController::class, 'updateEstado']);
+
+        Route::get('/docentes', [DocenteController::class, 'index']);
+        Route::get('/docentes/{id}', [DocenteController::class, 'show']);
+
+        //Route::get('/estudiantes', [EstudianteController::class, 'index']);
+        Route::get('/estudiante/{id}', [EstudianteController::class, 'getEstudianteByUserID']);
+        // Route::get('/estudiante/{id}', [EstudianteController::class, 'showInfoEstudent']);
+
+        Route::get('/estudiantes/usuario/{ID_usuario}', [EstudianteController::class, 'getEstudianteByUserID']);
+        Route::get('/grupo-empresa/data/{code}', [GrupoEmpresaController::class, 'getGroupData']);
+        Route::get('/product-backlog/{idEmpresa}', [ProductBacklogController::class, 'getBacklogByEmpresa']);
+        Route::post('/product-backlog/register', [ProductBacklogController::class, 'register']);
+
+        Route::get('/sprints/{id}/details', [SprintController::class, 'getSprintDetails']);
+        Route::get('grupo-empresa/{empresaId}/sprints', [GrupoEmpresaController::class, 'getSprintsByGrupoEmpresa']);
+        Route::get('grupo-empresa/{empresaId}/historias', [GrupoEmpresaController::class, 'getHistoriasByGrupoEmpresa']);
+
+        Route::post('/sprints', [SprintController::class, 'store']);
+        Route::post('/historias', [HistoriaUsuarioController::class, 'store']);
+
+        Route::middleware('auth:api')->get('/estudiantes-grupo', [EstudianteController::class, 'getEstudiantesMismoGrupo']);
+        Route::post('/grupo-empresa/join', [GrupoEmpresaController::class, 'joinGroup']);
+        Route::put('/estudiantes/{id}/grupo-empresa', [EstudianteController::class, 'updateGrupoEmpresa']);
+
+        Route::get('/estudiantes/{id}/grupo-empresa/getInfoPb', [GrupoEmpresaController::class, 'getInfoPb']);
+
+
+
+
         Route::get('/docente/empresas', [GrupoEmpresaController::class, 'getEmpresas']);
         Route::get('/docente/empresas/{id}', [GrupoEmpresaController::class, 'findEmpresa']);
         //:: rol estudiante
         //Route::apiResource('/estudiante/getInfoEst', EstudianteController::class);
-        Route::get('/estudiante/getInfoEst', [EstudianteController::class, 'getInfoEst']);
+
         Route::apiResource('/estudiante/empresa', EmpresaController::class);
 
         //:: rol docente
