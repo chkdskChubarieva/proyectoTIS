@@ -9,7 +9,7 @@ const ModalTarea = ({ show, onClose }) => {
     estado: 'Tasks',
     contenido_tarea: '',
     ID_estudiante: '',
-    ID_historia: '',
+    ID_historia: '', 
   });
   const [estudiantes, setEstudiantes] = useState([]);
 
