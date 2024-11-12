@@ -145,6 +145,29 @@ class EstudianteController extends Controller
                 'message' => 'Estudiante no encontrado con el ID de usuario proporcionado.',
             ], 404);
         }
+
+
+
+        
+    }
+
+    public function infoEmpresa(): JsonResponse
+    {
+        $user = Auth::user();
+        $empresa_ID = $user->estudiante->ID_empresa;
+        
+        $empresa = GrupoEmpresa::find($empresa_ID);
+
+        if (!$empresa) {
+            return response()->json(['message' => 'Grupo empresa no encontrada'], 404);
+        }
+
+        $cantEstudiantes = Estudiante::where('ID_empresa', $empresa_ID)->count();
+        
+        return response()->json([
+            'empresa' => $empresa,
+            'cantidad_estudiantes' => $cantEstudiantes,
+        ]);
     }
 }
 

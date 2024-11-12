@@ -16,10 +16,10 @@ const Register = () => {
   const [contrasenia, setContrasenia] = useState("");
   const [correo, setCorreo] = useState("");
   
-  const [nombreDoc, setNombreDoc] = useState("");
-  const [apellidoDoc, setApellidoDoc] = useState("");
-  const [contraseniaDoc, setContraseniaDoc] = useState("");
-  const [correoDoc, setCorreoDoc] = useState("");
+  //const [nombreDoc, setNombreDoc] = useState("");
+  //const [apellidoDoc, setApellidoDoc] = useState("");
+  //const [contraseniaDoc, setContraseniaDoc] = useState("");
+  //const [correoDoc, setCorreoDoc] = useState("");
   const [cod_sis, setCodigo] = useState("");
   const [nombre_usuario, setUsername] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -39,13 +39,23 @@ const Register = () => {
   const [formEstudianteVisible, setFormEstudianteVisible] = useState(true);
 
   const mostrarFormDocente = () => {
+    handleReset()
     setFormDocenteVisible(true);
     setFormEstudianteVisible(false);
   };
 
+  
   const mostrarFormEstudiante = () => {
+    handleReset()
     setFormDocenteVisible(false);
     setFormEstudianteVisible(true);
+  };
+
+  const handleReset = () => {
+    setNombre('')
+    setApellido('')
+    setContrasenia('')
+    setCorreo('')
   };
 
   useEffect(() => {
@@ -60,6 +70,7 @@ const Register = () => {
     // Validación de correo institucional y contraseña
     if (!correo.endsWith("@est.umss.edu")) {
       setEmailError("Debe usar su correo institucional");
+      alert("Debe usar su correo institucional");
       return;
     } else {
       setEmailError("");
@@ -90,26 +101,29 @@ const Register = () => {
     } catch (error) {
       console.error("Error al registrar:", error);
       alert("Ocurrió un error durante el registro");
+      navigate("/register");
     }
   };
 
   const submitRegistroDoc = async (e) => {
-    setNombre(nombreDoc)
-    setApellido(apellidoDoc)
-    setContrasenia(contraseniaDoc)
-    setCorreo(correoDoc)
+    
 
     e.preventDefault();
-
+    //Error con los set, no se actualizan al mismo tiempo que se le da al boton de submit
+    //setNombre(nombreDoc)
+    //setApellido(apellidoDoc)
+    //setContrasenia(contraseniaDoc)
+    //setCorreo(correoDoc)
     // Validación de correo institucional y contraseña
-    if (!correoDoc.endsWith("@est.umss.edu")) {
+    if (!correo.endsWith("@est.umss.edu")) {
       setEmailError("Debe usar su correo institucional");
+      alert("Debe usar su correo institucional");
       return;
     } else {
       setEmailError("");
     }
 
-    if (contraseniaDoc !== passwordDocenteConfInput.current.value) {
+    if (contrasenia !== passwordDocenteConfInput.current.value) {
       setPasswordError("Las contraseñas no coinciden");
       return;
     } else {
@@ -126,10 +140,13 @@ const Register = () => {
       });
       console.log(data);
       if (data.success) {
+        
         navigate("/login");
+
       } else {
         // Manejar otros posibles errores del backend
         alert("Error en el registro");
+        navigate("/register");
       }
     } catch (error) {
       console.error("Error al registrar:", error);
@@ -175,7 +192,7 @@ const Register = () => {
 
   //validacion para formulario de docente
   const handlePasswordDocenteChange = (e) => {
-    setContraseniaDoc(e.target.value);
+    setContrasenia(e.target.value);
     if (
       passwordDocenteConfInput.current &&
       e.target.value !== passwordDocenteConfInput.current.value
@@ -400,6 +417,7 @@ const Register = () => {
 
               <button
                 type="submit"
+                onClick={submitRegistro}
                 className="w-full p-2 mt-2 font-semibold transition-colors rounded-md shadow-md bg-slate-800 text-slate-100 hover:bg-slate-700"
               >
                 Registrarse
@@ -456,8 +474,8 @@ const Register = () => {
                     type="text"
                     id="nombreDoc"
                     className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
-                    value={nombreDoc}
-                    onChange={(e) => setNombreDoc(e.target.value)}
+                    value={nombre}
+                    onChange={(e) => setNombre(e.target.value)}
                     required
                   />
                   <br />
@@ -475,8 +493,8 @@ const Register = () => {
                     type="text"
                     id="apellidoDoc"
                     className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
-                    value={apellidoDoc}
-                    onChange={(e) => setApellidoDoc(e.target.value)}
+                    value={apellido}
+                    onChange={(e) => setApellido(e.target.value)}
                     required
                   />
                   <br />
@@ -515,8 +533,8 @@ const Register = () => {
                     type="email"
                     id="correoDoc"
                     className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
-                    value={correoDoc}
-                    onChange={(e) => setCorreoDoc(e.target.value)}
+                    value={correo}
+                    onChange={(e) => setCorreo(e.target.value)}
                     required
                   />
                   <br />
@@ -538,7 +556,7 @@ const Register = () => {
                     id="passwordDoc"
                     className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
                     onChange={handlePasswordDocenteChange}
-                    value={contraseniaDoc}
+                    value={contrasenia}
                     required
                   />
                   <br />
@@ -588,6 +606,7 @@ const Register = () => {
 
               <button
                 type="submit"
+                onClick={submitRegistroDoc}
                 className="w-full p-2 mt-2 font-semibold transition-colors rounded-md shadow-md bg-slate-800 text-slate-100 hover:bg-slate-700"
               >
                 Registrarse

@@ -18,6 +18,7 @@ import InfoGrupoEmpresa from "./page_docente/InfoGrupoEmpresa";
 import "./app.css";
 import PreviaEmpresas from "./page_docente/PreviaEmpresas";
 import Cloudinary from "./components/Cloudinary";
+import InfoEmpresa from "./page_estudiante/InfoEmpresa";
 //import InfoEmpresa from "./page_docente/InfoEmpresa";
 
 export const App = () => {
@@ -33,7 +34,7 @@ export const App = () => {
                 <Route element={<ProtectedRoutes/>}>
                     <Route path="/estudiante" element={<LayoutEstudiante/>}>
                         <Route path="" element={<InicioEst />} />
-                        <Route path="info" element={<JoinGroupForm />} />
+                        <Route path="info" element={<InfoEmpresa />} />
                         <Route path="registro" element={<RegistroEmpresa />} />
                         <Route path="unirse" element={<JoinGroupForm />} />
                         <Route path="calendario" element={<JoinGroupForm />} />
