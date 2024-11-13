@@ -28,11 +28,17 @@ Route::prefix('v1')->group(function () {
     Route::post("/auth/login", [AuthController::class, 'login']);
     Route::post("/auth/loginDoc", [AuthController::class, 'loginDoc']);
 
+    
     // Route::get('/tareas', [TareaController::class, 'tareas']);
-
+    
     Route::middleware('auth:sanctum')->get('/auth/user', [AuthController::class, 'getAuthenticatedUser']);
     //Rutas privadas
     Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::post('/tarea', [TareaController::class, 'store']);
+        
+        Route::get('/product-backlogs/{ID_pb}/estudiantes', [ProductBacklogController::class, 'obtenerEstudiantesPorBacklog']);
+      
+      
         //VISTA ESTUDIANTE
         Route::get('/estudiante/getInfoEst', [EstudianteController::class, 'getInfoEst']);  
         Route::get('/estudiante/info', [EstudianteController::class, 'infoEmpresa']);
@@ -65,7 +71,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/grupo-empresa/{id}', [GrupoEmpresaController::class, 'show']);
         Route::post("/grupo-empresa/register", [GrupoEmpresaController::class, 'store']);
         Route::get('/grupo-empresa/check-code/{code}', [GrupoEmpresaController::class, 'checkCode']);
-        Route::get('/tareas', [TareaController::class, 'index']);
+        
         Route::patch('/tareas/{id}/estado', [TareaController::class, 'updateEstado']);
 
         Route::get('/docentes', [DocenteController::class, 'index']);

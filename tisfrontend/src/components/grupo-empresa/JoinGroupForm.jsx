@@ -56,7 +56,7 @@ const JoinGroupForm = () => {
         payload: `Te has unido exitosamente al grupo con código: ${state.groupCode}`,
         error: false,
       });
-      navigate("/estudiante/registro-sprint");
+      navigate("/estudiante/product-backlog");
       window.location.reload();
     } else {
       dispatch({

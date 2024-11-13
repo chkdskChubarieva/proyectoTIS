@@ -12,31 +12,31 @@ use Illuminate\Support\Facades\DB;
 class TareaController extends Controller
 {
     public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'nro_tarea' => 'required|integer',
-            'estimacion' => 'required|integer',
-            'estado' => 'required|string|max:50',
-            'contenido_tarea' => 'required|string',
-            'ID_estudiante' => 'required|exists:estudiantes,ID_estudiante',
-            'ID_historia' => 'required|exists:historias_usuario,ID_historia',
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'nro_tarea' => 'required|integer',
+        'estimacion' => 'required|integer',
+        'estado' => 'required|string|max:50',
+        'contenido_tarea' => 'required|string',
+        'ID_estudiante' => 'required|exists:estudiantes,ID_estudiante',
+        'ID_historia' => 'required|exists:historias_usuario,ID_historia',
+    ]);
 
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
-        }
-
-        $tarea = Tarea::create([
-            'nro_tarea' => $request->nro_tarea,
-            'estimacion' => $request->estimacion,
-            'estado' => $request->estado,
-            'contenido_tarea' => $request->contenido_tarea,
-            'ID_estudiante' => $request->ID_estudiante,
-            'ID_historia' => $request->ID_historia,
-        ]);
-
-        return response()->json(['success' => true, 'tarea' => $tarea], 201);
+    if ($validator->fails()) {
+        return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
     }
+
+    $tarea = Tarea::create([
+        'nro_tarea' => $request->nro_tarea,
+        'estimacion' => $request->estimacion,
+        'estado' => $request->estado,
+        'contenido_tarea' => $request->contenido_tarea,
+        'ID_estudiante' => $request->ID_estudiante,
+        'ID_historia' => $request->ID_historia,
+    ]);
+
+    return response()->json(['success' => true, 'tarea' => $tarea], 201);
+}
 
     public function tareas(Request $request)
     {

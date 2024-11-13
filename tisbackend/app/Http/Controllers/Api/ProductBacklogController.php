@@ -72,4 +72,42 @@ class ProductBacklogController extends Controller
         }
     }
     
+
+    public function obtenerEstudiantesPorBacklog($ID_pb)
+    {
+        // Obtén el product backlog por ID
+        $productBacklog = ProductBacklog::find($ID_pb);
+    
+        if (!$productBacklog) {
+            return response()->json(['message' => 'Product backlog no encontrado'], 404);
+        }
+    
+        // Obtén la empresa asociada al product backlog
+        $grupoEmpresa = $productBacklog->grupoEmpresa;
+    
+        if (!$grupoEmpresa) {
+            return response()->json(['message' => 'Grupo Empresa no encontrada'], 404);
+        }
+    
+        // Obtén los estudiantes asociados a esa grupoEmpresa y sus usuarios
+        $estudiantes = $grupoEmpresa->estudiantes->map(function($estudiante) {
+            return [
+                'ID_estudiante' => $estudiante->ID_estudiante,
+                'ID_usuario' => $estudiante->ID_usuario,
+                'cod_sis' => $estudiante->cod_sis,
+                'tipo_est' => $estudiante->tipo_est,
+                'rol_scrum' => $estudiante->rol_scrum,
+                'ID_empresa' => $estudiante->ID_empresa,
+                'users' => $estudiante->users ? [
+                    'nombre' => $estudiante->users->nombre,
+                    'apellido' => $estudiante->users->apellido,
+                    'correo' => $estudiante->users->correo,
+                ] : null,
+            ];
+        });
+    
+        return response()->json($estudiantes);
+    }
+    
+    
 }

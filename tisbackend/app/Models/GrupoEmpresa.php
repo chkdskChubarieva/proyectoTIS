@@ -31,12 +31,13 @@ class GrupoEmpresa extends Model
     // Relación con Estudiantes
     public function estudiantes()
     {
-        return $this->hasMany(Estudiante::class, 'ID_empresa');  // Un grupo tiene muchos estudiantes
+        return $this->hasMany(Estudiante::class, 'ID_empresa', 'ID_empresa');
     }
+    
 
     public function productBacklogs()
     {
-        return $this->hasMany(ProductBacklog::class, 'ID_empresa');
+        return $this->hasMany(ProductBacklog::class, 'ID_empresa', 'ID_empresa');
     }
 }
 

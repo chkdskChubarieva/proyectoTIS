@@ -124,7 +124,7 @@ const RegistroEmpresa = () => {
 
                 
                 
-                navigate('/estudiante/registro-sprint');
+                navigate('/estudiante/product-backlog');
                 window.location.reload();
                 
             } else {
@@ -137,21 +137,24 @@ const RegistroEmpresa = () => {
     };
     
 
-    const copyToClipboard = () => {
+    const copyToClipboard = (e) => {
+        e.preventDefault();
         navigator.clipboard.writeText(codigo)
             .then(() => {
-                alert('Código copiado al portapapeles!'); 
+                alert('Código copiado al portapapeles!');
             })
             .catch(err => {
                 console.error('Error al copiar el código: ', err);
             });
     };
+    
+
     return (
     <>
         <section className="form-container">
             <div className="registro-container">
                 <h2>Registro de grupo-empresa</h2>
-                <form onSubmit={handleSubmit}>
+                <form >
                     <section className='form-register-empresa'>
                         <section className='colum-register'>
                             <div className="form-group">
@@ -188,7 +191,7 @@ const RegistroEmpresa = () => {
                                 Código generado: 
                                 <p>{codigo}
 
-                                <button onClick={copyToClipboard} className="copy-button">
+                                <button onClick={(e) => copyToClipboard(e)} className="copy-button">
                                     <span role="img" aria-label="copiar">📋</span> 
                                 </button>
                                 </p>
@@ -241,7 +244,7 @@ const RegistroEmpresa = () => {
                     </section>
                     {error && <p className="error-message">{error}</p>}
                     {success && <p className="success-message">Registro exitoso!</p>}
-                    <button type="submit" className='button'>Registrar empresa</button>
+                    <button onClick={handleSubmit} className='button'>Registrar empresa</button>
                     {/* <button type="button" className='button' onClick={handleTestRegister}>Probar Registro</button> */}
                 </form>
             </div>

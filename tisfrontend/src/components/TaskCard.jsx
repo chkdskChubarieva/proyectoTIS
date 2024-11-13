@@ -21,7 +21,7 @@ export const TaskCard = ({ task, index, onDragStart }) => {
           {StatusIcon[task.status]}
         </div>
       </div>
-      <p className="task-description">{task.description}</p>
+      {/* <p className="task-description">{task.description}</p> */}
       {task.assignee && (
         <div className="task-assignee">
           <div className="assignee-avatar">

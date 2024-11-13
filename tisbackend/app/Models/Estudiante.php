@@ -23,8 +23,14 @@ class Estudiante extends Model
     
     public function user()
     {
-        return $this->belongsTo(User::class, 'ID_usuario');
+        return $this->belongsTo(User::class, 'ID_usuario', 'ID_usuario');
     }
+
+
+    public function users()
+{
+    return $this->belongsTo(User::class, 'ID_usuario', 'ID_usuario');
+}
     public function grupoEmpresa()
     {
         return $this->belongsTo(GrupoEmpresa::class, 'ID_empresa');
