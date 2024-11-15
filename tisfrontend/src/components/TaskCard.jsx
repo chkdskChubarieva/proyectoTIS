@@ -9,6 +9,8 @@ const StatusIcon = {
 };
 
 export const TaskCard = ({ task, index, onDragStart }) => {
+  
+  
   return (
     <div
       className="task-card"

@@ -24,6 +24,7 @@ class ProductBacklog extends Model
     {
         return $this->belongsTo(GrupoEmpresa::class, 'ID_empresa', 'ID_empresa');
     }
+    
 
     public function sprints()
     {
