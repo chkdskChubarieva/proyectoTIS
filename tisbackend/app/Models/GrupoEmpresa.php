@@ -35,6 +35,10 @@ class GrupoEmpresa extends Model
     }
     
 
+    public function grupoEmpresa()
+{
+    return $this->belongsTo(GrupoEmpresa::class, 'ID_empresa', 'ID_empresa');
+}
     public function productBacklogs()
     {
         return $this->hasMany(ProductBacklog::class, 'ID_empresa', 'ID_empresa');

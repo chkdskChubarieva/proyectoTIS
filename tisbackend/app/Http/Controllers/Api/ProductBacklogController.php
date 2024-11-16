@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller; // Asegúrate de que esta línea esté presente
 use App\Models\ProductBacklog;
 use Illuminate\Http\Request;
+use App\Models\Estudiante;
 
 class ProductBacklogController extends Controller
 {
@@ -110,4 +111,27 @@ class ProductBacklogController extends Controller
     }
     
     
+
+    public function obtenerProductBacklogId($idEstudiante)
+{
+    // Obtiene al estudiante
+    $estudiante = Estudiante::with('grupoEmpresa')->find($idEstudiante);
+
+    if (!$estudiante || !$estudiante->grupoEmpresa) {
+        return response()->json(['message' => 'No se encontró el estudiante o la empresa asociada'], 404);
+    }
+
+    // Obtiene el ID_empresa asociado
+    $idEmpresa = $estudiante->grupoEmpresa->ID_empresa;
+
+    // Busca el ProductBacklog asociado a la empresa
+    $productBacklog = ProductBacklog::where('ID_empresa', $idEmpresa)->first();
+
+    if (!$productBacklog) {
+        return response()->json(['message' => 'No se encontró el Product Backlog asociado'], 404);
+    }
+
+    // Devuelve el ID_pb
+    return response()->json(['ID_pb' => $productBacklog->ID_pb]);
+}
 }

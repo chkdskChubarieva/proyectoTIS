@@ -9,7 +9,7 @@ const ModalTarea = ({ show, onClose, selectedStory }) => {
     estado: 'Tasks',
     contenido_tarea: '',
     ID_estudiante: '',
-    ID_historia: '', // Se asignará más tarde
+    ID_historia: '', 
   });
   const [estudiantes, setEstudiantes] = useState([]);
 
@@ -17,7 +17,7 @@ const ModalTarea = ({ show, onClose, selectedStory }) => {
     if (selectedStory) {
       setTareaData((prevData) => ({
         ...prevData,
-        ID_historia: selectedStory, // Actualiza ID_historia en tareaData
+        ID_historia: selectedStory, 
       }));
     }
 
@@ -29,7 +29,12 @@ const ModalTarea = ({ show, onClose, selectedStory }) => {
 
     const fetchEstudiantes = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/v1/product-backlogs/1/estudiantes`);
+        const userData = JSON.parse(sessionStorage.getItem("user"));
+
+        const idstudend = userData.roles[0].id;
+        const responsePD = await axios.get(`http://localhost:8000/api/v1/obtener-productbacklog/${idstudend}`)
+
+        const response = await axios.get(`http://localhost:8000/api/v1/product-backlogs/${responsePD.data.ID_pb}/estudiantes`);
         setEstudiantes(response.data);
       } catch (error) {
         console.error('Error al obtener estudiantes:', error);

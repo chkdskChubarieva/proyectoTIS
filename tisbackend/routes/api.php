@@ -38,7 +38,7 @@ Route::prefix('v1')->group(function () {
         
         Route::get('/product-backlogs/{ID_pb}/estudiantes', [ProductBacklogController::class, 'obtenerEstudiantesPorBacklog']);
       
-      
+        Route::get('/obtener-productbacklog/{idEstudiante}', [ProductBacklogController::class, 'obtenerProductBacklogId']);
         //VISTA ESTUDIANTE
         Route::get('/estudiante/getInfoEst', [EstudianteController::class, 'getInfoEst']);  
         Route::get('/estudiante/info', [EstudianteController::class, 'infoEmpresa']);
