@@ -1,42 +1,50 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
 
 const ModalNuevoSprint = ({ closeModal, empresaId }) => {
-  const [nombreSprint, setNombreSprint] = useState('');
-  const [fechaInicio, setFechaInicio] = useState('');
-  const [fechaFin, setFechaFin] = useState('');
+  const [nombreSprint, setNombreSprint] = useState("");
+  const [fechaInicio, setFechaInicio] = useState("");
+  const [fechaFin, setFechaFin] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/sprints', 
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/sprints",
         {
           nombre_sprint: nombreSprint,
           fecha_inicio: fechaInicio,
           fecha_fin: fechaFin,
-          ID_empresa: empresaId,  
-        }
+          ID_empresa: empresaId,
+        },
       );
 
       if (response.status === 201) {
-        alert('Sprint creado exitosamente');
+        alert("Sprint creado exitosamente");
         closeModal();
       }
     } catch (error) {
       console.error("Error al crear el sprint:", error);
-      alert('Hubo un problema al crear el sprint');
+      alert("Hubo un problema al crear el sprint");
     }
   };
 
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-      <form onSubmit={handleSubmit} className="rounded-md bg-neutral-200 px-8 py-5 shadow">
+  const modalContent = (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+      <form
+        onSubmit={handleSubmit}
+        className="rounded-md bg-neutral-200 px-8 py-5 shadow"
+      >
         <span className="mb-4 flex justify-center text-2xl font-semibold text-primary-800">
           Nuevo sprint
         </span>
         <div>
-          <label htmlFor="nombre_sprint" className="text-lg font-semibold text-primary-800">
+          <label
+            htmlFor="nombre_sprint"
+            className="text-lg font-semibold text-primary-800"
+          >
             Nombre del sprint
           </label>
           <br />
@@ -52,7 +60,10 @@ const ModalNuevoSprint = ({ closeModal, empresaId }) => {
 
         <section className="flex gap-2">
           <div>
-            <label htmlFor="fecha_ini" className="text-lg font-semibold text-primary-800">
+            <label
+              htmlFor="fecha_ini"
+              className="text-lg font-semibold text-primary-800"
+            >
               Fecha inicio
             </label>
             <br />
@@ -61,12 +72,15 @@ const ModalNuevoSprint = ({ closeModal, empresaId }) => {
               id="fecha_ini"
               value={fechaInicio}
               onChange={(e) => setFechaInicio(e.target.value)}
-              className="my-2 w-full rounded-md border border-primary-500 p-2"
+              className="my-2 w-full rounded-md border border-primary-500 p-2 py-1"
             />
           </div>
 
           <div>
-            <label htmlFor="fecha_fin" className="text-lg font-semibold text-primary-800">
+            <label
+              htmlFor="fecha_fin"
+              className="text-lg font-semibold text-primary-800"
+            >
               Fecha fin
             </label>
             <br />
@@ -97,6 +111,10 @@ const ModalNuevoSprint = ({ closeModal, empresaId }) => {
         </section>
       </form>
     </div>
+  );
+  return ReactDOM.createPortal(
+    modalContent,
+    document.getElementById("modal-root"),
   );
 };
 

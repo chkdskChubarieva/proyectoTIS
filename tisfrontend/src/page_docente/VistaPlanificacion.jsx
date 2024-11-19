@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import InfoUsuario from "../components/InfoUsuario";
 import PlaceholderIMG from "../assets/img/no-image.jpg";
 import "../components/background.css";
 
-const InfoEmpresa = () => {
+const InfoGrupoEmpresa = () => {
+  const { id } = useParams();
   const [empresa, setEmpresa] = useState(null);
   const [cantEstudiantes, setCantEstudiantes] = useState(null);
   const base_api_url = "http://localhost:8000/api/v1";
 
   useEffect(() => {
     axios
-      .get(`${base_api_url}/estudiante/info`, {
+      .get(`${base_api_url}/docente/empresas/${id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((response) => {
@@ -22,7 +24,7 @@ const InfoEmpresa = () => {
       .catch((error) => {
         console.error("Error al obtener los datos de la empresa:", error);
       });
-  });
+  }, [id]);
 
   if (!empresa) {
     return <p>Cargando datos de la empresa...</p>;
@@ -74,17 +76,24 @@ const InfoEmpresa = () => {
               />
             </div>
 
-            <div className="relative flex items-center justify-center overflow-hidden rounded-3xl">
-              <img
-                src={PlaceholderIMG}
-                className="absolute object-cover size-40 rounded-3xl"
-              />
-              <img
-                src={empresa.logo_empresa}
-                className="relative object-cover size-40 rounded-3xl"
-                loading="lazy"
-              />
+            <div className="flex items-center justify-center overflow-hidden rounded-3xl">
+              <img src={PlaceholderIMG} className="object-cover size-40 rounded-3xl" />
             </div>
+          </section>
+
+          <section className="flex gap-5 mt-5">
+            <button
+              type="button"
+              className="w-full p-2 text-lg font-semibold text-white transition-colors rounded bg-primary-500 hover:bg-primary-400"
+            >
+              Ver planificacion de sprint
+            </button>
+            <button
+              type="button"
+              className="w-full p-2 text-lg font-semibold text-white transition-colors rounded bg-primary-500 hover:bg-primary-400"
+            >
+              Ver planilla de evaluación
+            </button>
           </section>
         </article>
       </div>
@@ -92,4 +101,4 @@ const InfoEmpresa = () => {
   );
 };
 
-export default InfoEmpresa;
+export default InfoGrupoEmpresa;

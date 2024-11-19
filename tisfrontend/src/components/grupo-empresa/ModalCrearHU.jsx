@@ -1,23 +1,27 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import axios from "axios";
 
 const ModalCrearHU = ({ closeModal }) => {
-  const [titulo, setTitulo] = useState(""); 
-  const [descripcion, setDescripcion] = useState(""); 
-  const [sprint, setSprint] = useState(""); 
+  const [titulo, setTitulo] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [sprint, setSprint] = useState("");
   const [prioridad, setPrioridad] = useState("");
   const [empresaId, setEmpresaId] = useState(null);
-  const [sprints, setSprints] = useState([]); 
-  const [historias, setHistorias] = useState([]); 
+  const [sprints, setSprints] = useState([]);
+  const [historias, setHistorias] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const userData = JSON.parse(sessionStorage.getItem('user'));
+    const userData = JSON.parse(sessionStorage.getItem("user"));
     const userId = userData ? userData.ID_usuario : null;
 
     const fetchCompanyId = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/v1/estudiante/${userId}`);
+        const response = await axios.get(
+          `http://localhost:8000/api/v1/estudiante/${userId}`,
+        );
         if (response.data.data.ID_empresa) {
           setEmpresaId(response.data.data.ID_empresa);
         }
@@ -34,7 +38,9 @@ const ModalCrearHU = ({ closeModal }) => {
   useEffect(() => {
     const fetchSprints = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/v1/grupo-empresa/${empresaId}/sprints`);
+        const response = await axios.get(
+          `http://localhost:8000/api/v1/grupo-empresa/${empresaId}/sprints`,
+        );
         setSprints(response.data.sprints || []);
       } catch (error) {
         console.error("Error al obtener los sprints:", error);
@@ -49,7 +55,9 @@ const ModalCrearHU = ({ closeModal }) => {
   useEffect(() => {
     const fetchHistorias = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/v1/grupo-empresa/${empresaId}/historias`);
+        const response = await axios.get(
+          `http://localhost:8000/api/v1/grupo-empresa/${empresaId}/historias`,
+        );
         setHistorias(response.data.historias || []);
       } catch (error) {
         console.error("Error al obtener las historias de usuario:", error);
@@ -63,27 +71,33 @@ const ModalCrearHU = ({ closeModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!titulo || !descripcion || !sprint || !empresaId || !prioridad) {
       setError("Por favor, complete todos los campos.");
       return;
     }
-  
-    console.log(titulo, descripcion, sprint, prioridad)
+
+    console.log(titulo, descripcion, sprint, prioridad);
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/historias', {
-        titulo: titulo,
-        desc_historia: descripcion,
-        ID_sprint: sprint,
-        prioridad: prioridad 
-      });
-  
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/historias",
+        {
+          titulo: titulo,
+          desc_historia: descripcion,
+          ID_sprint: sprint,
+          prioridad: prioridad,
+        },
+      );
+
       console.log("Historia de usuario creada:", response.data);
-      closeModal(); 
+      closeModal();
     } catch (error) {
       if (error.response) {
         console.error("Detalles del error:", error.response.data.errors);
-        setError("Hubo un error al crear la historia de usuario. " + JSON.stringify(error.response.data.errors));
+        setError(
+          "Hubo un error al crear la historia de usuario. " +
+            JSON.stringify(error.response.data.errors),
+        );
       } else if (error.request) {
         console.error("Error en la solicitud:", error.request);
       } else {
@@ -92,31 +106,45 @@ const ModalCrearHU = ({ closeModal }) => {
       setError("Hubo un error al crear la historia de usuario.");
     }
   };
-  
 
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-      <form onSubmit={handleSubmit} className="max-w-3xl rounded-md bg-neutral-200 px-8 py-5 shadow">
-        <span className="mb-4 flex justify-center text-2xl font-semibold text-primary-800">Nueva historia de usuario</span>
-        {error && <p className="text-red-500 text-center">{error}</p>}
+  const modalContent = (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+      <form
+        onSubmit={handleSubmit}
+        className="w-160 mx-5 rounded-md bg-neutral-200 px-8 py-5 shadow"
+      >
+        <span className="mb-4 flex justify-center text-2xl font-semibold text-primary-800">
+          Nueva historia de usuario
+        </span>
+        {error && <p className="text-center text-red-500">{error}</p>}
 
-        <section className="flex gap-5">
-          <div>
-            <label htmlFor="titulo" className="text-lg font-semibold text-primary-800">Titulo</label>
+        <section className="flex flex-col gap-2 sm:flex-row sm:gap-2">
+          <div className="w-full">
+            <label
+              htmlFor="titulo"
+              className="text-lg font-semibold text-primary-800"
+            >
+              Titulo
+            </label>
             <br />
             <input
               type="text"
               id="titulo"
               value={titulo}
               onChange={(e) => setTitulo(e.target.value)}
-              className="my-2 rounded-md border border-primary-500 p-2"
+              className="my-2 w-full rounded-md border border-primary-500 p-2"
               required
               placeholder="Titulo de la historia de usuario"
             />
           </div>
 
-          <div>
-            <label htmlFor="sprint" className="text-lg font-semibold text-primary-800">Sprint</label>
+          <div className="w-full">
+            <label
+              htmlFor="sprint"
+              className="text-lg font-semibold text-primary-800"
+            >
+              Sprint
+            </label>
             <select
               id="sprint"
               value={sprint}
@@ -124,7 +152,9 @@ const ModalCrearHU = ({ closeModal }) => {
               className="my-2 rounded-md border border-primary-500 p-2"
               required
             >
-              <option value="" disabled>Selecciona un sprint</option>
+              <option value="" disabled>
+                Selecciona un sprint
+              </option>
               {sprints.map((sprintItem) => (
                 <option key={sprintItem.ID_sprint} value={sprintItem.ID_sprint}>
                   {sprintItem.nombre_sprint}
@@ -135,7 +165,12 @@ const ModalCrearHU = ({ closeModal }) => {
         </section>
 
         <div className="my-2">
-          <label htmlFor="prioridad" className="text-lg font-semibold text-primary-800">Prioridad</label>
+          <label
+            htmlFor="prioridad"
+            className="text-lg font-semibold text-primary-800"
+          >
+            Prioridad
+          </label>
           <select
             id="prioridad"
             value={prioridad}
@@ -143,14 +178,21 @@ const ModalCrearHU = ({ closeModal }) => {
             className="my-2 rounded-md border border-primary-500 p-2"
             required
           >
-            <option value="" disabled>Selecciona la prioridad</option>
+            <option value="" disabled>
+              Selecciona la prioridad
+            </option>
             <option value="1">Alta</option>
             <option value="2">Media</option>
             <option value="3">Baja</option>
           </select>
         </div>
 
-        <label htmlFor="descripcion" className="text-lg font-semibold text-primary-800">Descripción</label>
+        <label
+          htmlFor="descripcion"
+          className="text-lg font-semibold text-primary-800"
+        >
+          Descripción
+        </label>
         <textarea
           id="descripcion"
           value={descripcion}
@@ -178,6 +220,10 @@ const ModalCrearHU = ({ closeModal }) => {
         </section>
       </form>
     </div>
+  );
+  return ReactDOM.createPortal(
+    modalContent,
+    document.getElementById("modal-root"),
   );
 };
 

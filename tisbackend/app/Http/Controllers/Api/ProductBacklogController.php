@@ -22,6 +22,7 @@ class ProductBacklogController extends Controller
 
         return response()->json($backlog, 200);
     }
+    
     public function getHistoriasByGrupoEmpresa($empresaId)
     {
         try {

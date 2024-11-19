@@ -9,13 +9,11 @@ import Navbar from "../components/Navbar";
 const Register = () => {
   const { getToken } = AuthUser();
 
-  
-  
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [contrasenia, setContrasenia] = useState("");
   const [correo, setCorreo] = useState("");
-  
+
   //const [nombreDoc, setNombreDoc] = useState("");
   //const [apellidoDoc, setApellidoDoc] = useState("");
   //const [contraseniaDoc, setContraseniaDoc] = useState("");
@@ -39,23 +37,22 @@ const Register = () => {
   const [formEstudianteVisible, setFormEstudianteVisible] = useState(true);
 
   const mostrarFormDocente = () => {
-    handleReset()
+    handleReset();
     setFormDocenteVisible(true);
     setFormEstudianteVisible(false);
   };
 
-  
   const mostrarFormEstudiante = () => {
-    handleReset()
+    handleReset();
     setFormDocenteVisible(false);
     setFormEstudianteVisible(true);
   };
 
   const handleReset = () => {
-    setNombre('')
-    setApellido('')
-    setContrasenia('')
-    setCorreo('')
+    setNombre("");
+    setApellido("");
+    setContrasenia("");
+    setCorreo("");
   };
 
   useEffect(() => {
@@ -106,8 +103,6 @@ const Register = () => {
   };
 
   const submitRegistroDoc = async (e) => {
-    
-
     e.preventDefault();
     //Error con los set, no se actualizan al mismo tiempo que se le da al boton de submit
     //setNombre(nombreDoc)
@@ -136,13 +131,11 @@ const Register = () => {
         apellido,
         contrasenia,
         correo,
-        nombre_usuario
+        nombre_usuario,
       });
       console.log(data);
       if (data.success) {
-        
         navigate("/login");
-
       } else {
         // Manejar otros posibles errores del backend
         alert("Error en el registro");
@@ -229,23 +222,23 @@ const Register = () => {
       <Header nombreBoton={"Iniciar sesión"} hrefBoton={"/login"} />
       <Navbar botones={botonesNavbar} />
 
-      <main className="py-12 sm:pb-0 sm:pt-12">
+      <main className="relative top-32 py-12 sm:pt-12">
         {formEstudianteVisible && (
           <form
             method="POST"
             id="formEstudiante"
-            className="max-w-lg mx-auto overflow-hidden rounded-md w-80 bg-slate-200 bg-opacity-80 sm:w-fit"
+            className="mx-auto w-80 max-w-lg overflow-hidden rounded-md bg-slate-200 bg-opacity-80 sm:w-fit"
             onSubmit={submitRegistro}
           >
             <div className="flex">
               <div
-                className="w-1/2 p-3 font-semibold text-center select-none text-zinc-600 hover:cursor-pointer hover:bg-slate-200 hover:bg-opacity-60"
+                className="w-1/2 select-none p-3 text-center font-semibold text-zinc-600 hover:cursor-pointer hover:bg-slate-200 hover:bg-opacity-60"
                 onClick={mostrarFormEstudiante}
               >
                 Estudiante
               </div>
               <div
-                className="w-1/2 p-3 font-semibold text-center transition-colors select-none bg-zinc-400 bg-opacity-60 text-zinc-600 hover:cursor-pointer hover:bg-slate-200 hover:bg-opacity-60"
+                className="w-1/2 select-none bg-zinc-400 bg-opacity-60 p-3 text-center font-semibold text-zinc-600 transition-colors hover:cursor-pointer hover:bg-slate-200 hover:bg-opacity-60"
                 onClick={mostrarFormDocente}
               >
                 Docente
@@ -269,7 +262,7 @@ const Register = () => {
                   <input
                     type="text"
                     id="nombre"
-                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                    className="my-1 w-full rounded-md border border-slate-800 bg-slate-100 bg-opacity-50 px-2 py-1"
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                     required
@@ -288,7 +281,7 @@ const Register = () => {
                   <input
                     type="text"
                     id="apellido"
-                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                    className="my-1 w-full rounded-md border border-slate-800 bg-slate-100 bg-opacity-50 px-2 py-1"
                     value={apellido}
                     onChange={(e) => setApellido(e.target.value)}
                     required
@@ -332,7 +325,7 @@ const Register = () => {
                   <input
                     type="email"
                     id="correo"
-                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                    className="my-1 w-full rounded-md border border-slate-800 bg-slate-100 bg-opacity-50 px-2 py-1"
                     value={correo}
                     onChange={(e) => setCorreo(e.target.value)}
                     onBlur={(e) => {
@@ -367,7 +360,7 @@ const Register = () => {
                     ref={passwordInput}
                     type="password"
                     id="password"
-                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                    className="my-1 w-full rounded-md border border-slate-800 bg-slate-100 bg-opacity-50 px-2 py-1"
                     value={contrasenia}
                     onChange={handlePasswordChange}
                     required
@@ -387,7 +380,7 @@ const Register = () => {
                     ref={passwordConfInput}
                     type="password"
                     id="conf-password"
-                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                    className="my-1 w-full rounded-md border border-slate-800 bg-slate-100 bg-opacity-50 px-2 py-1"
                     onChange={handlePasswordConfirmChange}
                     required
                   />
@@ -395,7 +388,7 @@ const Register = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between w-full my-1">
+              <div className="my-1 flex w-full items-center justify-between">
                 <div className="flex gap-1">
                   <input
                     ref={showPasswordCheckbox}
@@ -406,7 +399,7 @@ const Register = () => {
                   />
                   <label
                     htmlFor="show-password"
-                    className="text-sm cursor-pointer select-none text-slate-800"
+                    className="cursor-pointer select-none text-sm text-slate-800"
                   >
                     Mostrar contraseña
                   </label>
@@ -418,15 +411,15 @@ const Register = () => {
               <button
                 type="submit"
                 onClick={submitRegistro}
-                className="w-full p-2 mt-2 font-semibold transition-colors rounded-md shadow-md bg-slate-800 text-slate-100 hover:bg-slate-700"
+                className="mt-2 w-full rounded-md bg-slate-800 p-2 font-semibold text-slate-100 shadow-md transition-colors hover:bg-slate-700"
               >
                 Registrarse
               </button>
 
-              <div className="flex justify-center mt-2">
+              <div className="mt-2 flex justify-center">
                 <a
                   href="/login"
-                  className="text-xs text-center transition-colors text-slate-800 hover:underline hover:decoration-slate-800"
+                  className="text-center text-xs text-slate-800 transition-colors hover:underline hover:decoration-slate-800"
                 >
                   ¿Ya tienes una cuenta? <strong>Inicia sesión</strong>
                 </a>
@@ -438,18 +431,18 @@ const Register = () => {
           <form
             method="POST"
             id="formDocente"
-            className="max-w-lg mx-auto overflow-hidden rounded-md w-80 bg-slate-200 bg-opacity-80 sm:w-fit"
+            className="mx-auto w-80 max-w-lg overflow-hidden rounded-md bg-slate-200 bg-opacity-80 sm:w-fit"
             onSubmit={submitRegistroDoc}
           >
             <div className="flex">
               <div
-                className="w-1/2 p-3 font-semibold text-center transition-colors select-none bg-zinc-400 bg-opacity-60 text-zinc-600 hover:cursor-pointer hover:bg-slate-200 hover:bg-opacity-60"
+                className="w-1/2 select-none bg-zinc-400 bg-opacity-60 p-3 text-center font-semibold text-zinc-600 transition-colors hover:cursor-pointer hover:bg-slate-200 hover:bg-opacity-60"
                 onClick={mostrarFormEstudiante}
               >
                 Estudiante
               </div>
               <div
-                className="w-1/2 p-3 font-semibold text-center select-none text-zinc-600 hover:cursor-pointer hover:bg-slate-200 hover:bg-opacity-60"
+                className="w-1/2 select-none p-3 text-center font-semibold text-zinc-600 hover:cursor-pointer hover:bg-slate-200 hover:bg-opacity-60"
                 onClick={mostrarFormDocente}
               >
                 Docente
@@ -457,7 +450,7 @@ const Register = () => {
             </div>
             <div className="p-8">
               <img className="h-7" src={LogoVistaSoft} alt="logo-vistasoft" />
-              <h1 className="flex my-4 text-3xl font-semibold text-slate-800">
+              <h1 className="my-4 flex text-3xl font-semibold text-slate-800">
                 Registrarse (Docente)
               </h1>
 
@@ -473,7 +466,7 @@ const Register = () => {
                   <input
                     type="text"
                     id="nombreDoc"
-                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                    className="my-1 w-full rounded-md border border-slate-800 bg-slate-100 bg-opacity-50 px-2 py-1"
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                     required
@@ -492,7 +485,7 @@ const Register = () => {
                   <input
                     type="text"
                     id="apellidoDoc"
-                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                    className="my-1 w-full rounded-md border border-slate-800 bg-slate-100 bg-opacity-50 px-2 py-1"
                     value={apellido}
                     onChange={(e) => setApellido(e.target.value)}
                     required
@@ -513,7 +506,7 @@ const Register = () => {
                   <input
                     type="text"
                     id="usuarioDoc"
-                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                    className="my-1 w-full rounded-md border border-slate-800 bg-slate-100 bg-opacity-50 px-2 py-1"
                     value={nombre_usuario}
                     onChange={(e) => setUsername(e.target.value)}
                     required
@@ -532,7 +525,7 @@ const Register = () => {
                   <input
                     type="email"
                     id="correoDoc"
-                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                    className="my-1 w-full rounded-md border border-slate-800 bg-slate-100 bg-opacity-50 px-2 py-1"
                     value={correo}
                     onChange={(e) => setCorreo(e.target.value)}
                     required
@@ -554,7 +547,7 @@ const Register = () => {
                     ref={passwordDocenteInput}
                     type="password"
                     id="passwordDoc"
-                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                    className="my-1 w-full rounded-md border border-slate-800 bg-slate-100 bg-opacity-50 px-2 py-1"
                     onChange={handlePasswordDocenteChange}
                     value={contrasenia}
                     required
@@ -574,7 +567,7 @@ const Register = () => {
                     ref={passwordDocenteConfInput}
                     type="password"
                     id="conf-passwordDoc"
-                    className="w-full px-2 py-1 my-1 bg-opacity-50 border rounded-md border-slate-800 bg-slate-100"
+                    className="my-1 w-full rounded-md border border-slate-800 bg-slate-100 bg-opacity-50 px-2 py-1"
                     onChange={handlePasswordDocenteConfirmChange}
                     required
                   />
@@ -582,7 +575,7 @@ const Register = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between w-full my-1">
+              <div className="my-1 flex w-full items-center justify-between">
                 <div className="flex gap-1">
                   <input
                     ref={showPasswordDocenteCheckbox}
@@ -593,7 +586,7 @@ const Register = () => {
                   />
                   <label
                     htmlFor="show-passwordDoc"
-                    className="text-sm cursor-pointer select-none text-slate-800"
+                    className="cursor-pointer select-none text-sm text-slate-800"
                   >
                     Mostrar contraseña
                   </label>
@@ -607,15 +600,15 @@ const Register = () => {
               <button
                 type="submit"
                 onClick={submitRegistroDoc}
-                className="w-full p-2 mt-2 font-semibold transition-colors rounded-md shadow-md bg-slate-800 text-slate-100 hover:bg-slate-700"
+                className="mt-2 w-full rounded-md bg-slate-800 p-2 font-semibold text-slate-100 shadow-md transition-colors hover:bg-slate-700"
               >
                 Registrarse
               </button>
 
-              <div className="flex justify-center mt-2">
+              <div className="mt-2 flex justify-center">
                 <a
                   href="/login"
-                  className="text-xs text-center transition-colors text-slate-800 hover:underline hover:decoration-slate-800"
+                  className="text-center text-xs text-slate-800 transition-colors hover:underline hover:decoration-slate-800"
                 >
                   ¿Ya tienes una cuenta? <strong>Inicia sesión</strong>
                 </a>

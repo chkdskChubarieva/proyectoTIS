@@ -27,7 +27,7 @@ const PreviaEmpresas = () => {
 
   return (
     <>
-      <div className="container mx-auto bg-white px-6">
+      <div className="container mx-auto px-6">
         <div className="my-4 rounded-md bg-primary-600 p-3 text-center">
           <span className="text-xl font-semibold text-white">
             Proyectos designados

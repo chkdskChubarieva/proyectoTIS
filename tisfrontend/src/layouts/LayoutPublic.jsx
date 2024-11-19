@@ -1,13 +1,12 @@
-import React from 'react'
-//import Navbar from '../components/Navbar'
-//import Footer from '../components/Footer'
-import {Outlet} from 'react-router-dom'
+import "../components/PageHome.css";
+
+import { Outlet } from "react-router-dom";
 const LayoutPublic = () => {
   return (
     <>
-    <Outlet/>
+      <Outlet />
     </>
-  )
-}
+  );
+};
 
-export default LayoutPublic
+export default LayoutPublic;

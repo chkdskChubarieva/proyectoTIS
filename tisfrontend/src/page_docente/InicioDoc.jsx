@@ -22,20 +22,20 @@ const InicioDoc = () => {
   };
 
   return (
-    <section className="w-full pt-8 bg-white">
+    <section className="w-full pt-8">
       <div className="mx-auto w-fit">
-        <div className="p-3 my-4 text-center rounded-md bg-primary-600">
+        <div className="my-4 rounded-md bg-primary-600 p-3 text-center">
           <span className="text-xl font-semibold text-white">
             Bienvenido tu espacio de trabajo
           </span>
         </div>
 
-        <article className="px-6 py-5 mx-auto text-white rounded-md w-fit bg-primary-600">
-          <h1 className="flex justify-center mb-4 text-lg font-semibold">
+        <article className="mx-auto mb-8 w-fit rounded-md bg-primary-600 px-6 py-5 text-white lg:mb-0">
+          <h1 className="mb-8 flex justify-center text-lg font-semibold lg:mb-4">
             Información de usuario
           </h1>
-          <section className="flex gap-10">
-            <div className="space-y-2 min-w-80 max-w-fit">
+          <section className="flex flex-col gap-5 lg:flex lg:flex-row lg:gap-10">
+            <div className="order-last min-w-96 max-w-fit space-y-2 lg:order-first">
               <InfoUsuario
                 icono={<i className="fa-solid fa-user"></i>}
                 titulo={"Usuario: "}
@@ -61,11 +61,11 @@ const InicioDoc = () => {
               />
             </div>
 
-            <div className="relative flex items-center">
+            <div className="relative flex items-center justify-center">
               <img
                 src={PlaceholderIMG}
                 alt="avatar-usuario"
-                className="absolute rounded-full size-32"
+                className="absolute size-32 rounded-full"
               />
               <img
                 src={`https://ui-avatars.com/api/?size=100&bold=true&rounded=true&name=${docente.nombre}+${docente.apellido}`}

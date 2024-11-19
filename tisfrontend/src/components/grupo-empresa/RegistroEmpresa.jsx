@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './RegistroEmpresa.css';
-import { useNavigate } from 'react-router-dom';
-import { generateUniqueCode } from './generateUniqueCode';
 
 const RegistroEmpresa = () => {
     const [nombre_empresa, setNombreEmpresa] = useState("");
@@ -16,30 +14,18 @@ const RegistroEmpresa = () => {
     const [success, setSuccess] = useState(false);
     const [logoPreview, setLogoPreview] = useState(null);
     const [docentes, setDocentes] = useState([]);
-    const [empresaData, setempresaData] = useState([]);
-    const navigate = useNavigate();
+    const [file, setFile] = useState(null);
 
-    const fetchUniqueCode = async () => {
-        const uniqueCode = await generateUniqueCode();
-        setCodigo(uniqueCode);
-    };
+    const preset_name = "proyectoTIS";
+    const cloud_name = "dlill8puk";
 
+    // Generar código único
     useEffect(() => {
-        fetchUniqueCode();
+        const generateUniqueCode = () => Math.random().toString(36).substring(2, 10).toUpperCase();
+        setCodigo(generateUniqueCode());
     }, []);
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setLogoEmpresa(file.name);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setLogoPreview(reader.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
+    // Obtener lista de docentes
     useEffect(() => {
         axios.get('http://localhost:8000/api/v1/docentes')
             .then(response => {
@@ -54,12 +40,45 @@ const RegistroEmpresa = () => {
             });
     }, []);
 
+    // Previsualización de imagen
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setLogoPreview(reader.result);
+            };
+            reader.readAsDataURL(selectedFile);
+            setFile(selectedFile); // Guardar el archivo para su subida
+        }
+    };
+
+    // Manejo del envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
         setSuccess(false);
 
+        if (!file) {
+            setError("Por favor, selecciona una imagen.");
+            return;
+        }
+
+        // Subir imagen a Cloudinary
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', preset_name);
+
         try {
+            const uploadResponse = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            const uploadData = await uploadResponse.json();
+            setLogoEmpresa(uploadData.secure_url);
+
+            // Enviar datos al backend
             const response = await axios.post('http://localhost:8000/api/v1/grupo-empresa/register', {
                 nombre_empresa,
                 correo_empresa,
@@ -67,101 +86,41 @@ const RegistroEmpresa = () => {
                 telf_representante,
                 ID_docente,
                 codigo,
-                logo_empresa,
+                logo_empresa: uploadData.secure_url,
             });
 
-            console.log("Respuesta completa del servidor:", response.data);
-
             if (response.data.success) {
-                const empresaID = response.data.data.ID_empresa; 
-                const userData = JSON.parse(sessionStorage.getItem('user'));
-                const userID = userData ? userData.ID_usuario : null;
-                try {
-                    console.log(userID)
-                    const responseEstudent = await axios.get(`http://localhost:8000/api/v1/estudiantes/usuario/${userID}`);
-                    console.log(responseEstudent.data);
-                    
-                    if (responseEstudent.data.success) {
-                        if (userID) {
-                            await axios.put(`http://localhost:8000/api/v1/estudiantes/${responseEstudent.data.data.ID_estudiante}/grupo-empresa`, {
-                                ID_empresa: empresaID,
-                            });
-                        }
-                    } else {
-                        console.error('Error:', responseEstudent.data.message);
-                    }
-                } catch (error) {
-                    console.error('Error en la solicitud:', error);
-                }
-                
-
-                try {
-                    console.log(empresaID)
-                    const response = await axios.post('http://localhost:8000/api/product-backlog/register', {
-                        ID_empresa: empresaID
-                    });
-            
-                    if (response.data.success) {
-                        console.log('Product Backlog registrado con éxito:', response.data.data);
-                    } else {
-                        console.error('Error al registrar el Product Backlog:', response.data.message);
-                    }
-                } catch (error) {
-                    console.error('Error en la solicitud:', error);
-                }
-
-
-                axios.get(`http://localhost:8000/api/v1/grupo-empresa/${empresaID}`)
-                .then(responseEmpresa => {
-                    console.log(responseEmpresa.data.data);
-                    setempresaData(responseEmpresa.data.data);
-                })
-                .catch(error => {
-                    console.error("Error fetching empresa data:", error);
-                });
-
                 setSuccess(true);
-
-                
-                
-                navigate('/estudiante/product-backlog');
-                window.location.reload();
-                
+                console.log("Registro exitoso:", response.data.data);
             } else {
                 setError("Ocurrió un error en el registro.");
             }
-        } catch (error) {
-            console.error('Error registrando la empresa:', error);
-            setError('Hubo un problema al registrar la empresa.');
+        } catch (err) {
+            console.error("Error al registrar la empresa:", err);
+            setError("Hubo un problema al registrar la empresa.");
         }
     };
-    
 
+    // Copiar código al portapapeles
     const copyToClipboard = (e) => {
         e.preventDefault();
         navigator.clipboard.writeText(codigo)
-            .then(() => {
-                alert('Código copiado al portapapeles!');
-            })
-            .catch(err => {
-                console.error('Error al copiar el código: ', err);
-            });
+            .then(() => alert('Código copiado al portapapeles!'))
+            .catch(err => console.error('Error al copiar el código: ', err));
     };
-    
 
     return (
-    <>
         <section className="form-container">
             <div className="registro-container">
                 <h2>Registro de grupo-empresa</h2>
-                <form >
+                <form onSubmit={handleSubmit}>
                     <section className='form-register-empresa'>
                         <section className='colum-register'>
                             <div className="form-group">
                                 <label>Nombre de la empresa*</label>
                                 <input
                                     type="text"
-                                     value={nombre_empresa}
+                                    value={nombre_empresa}
                                     onChange={(e) => setNombreEmpresa(e.target.value)}
                                     placeholder='Ingresa el nombre'
                                     required
@@ -173,7 +132,7 @@ const RegistroEmpresa = () => {
                                     type="email"
                                     value={correo_empresa}
                                     onChange={(e) => setCorreoEmpresa(e.target.value)}
-                                    placeholder='Ingresa el correo electronico'
+                                    placeholder='Ingresa el correo electrónico'
                                     required
                                 />
                             </div>
@@ -183,21 +142,20 @@ const RegistroEmpresa = () => {
                                     type="text"
                                     value={telf_representante}
                                     onChange={(e) => setTelfRepresentante(e.target.value)}
-                                    placeholder='Ingresa número del representante'
+                                    placeholder='Ingresa el número del representante'
                                     required
                                 />
                             </div>
                             <div className="form-code">
-                                Código generado: 
-                                <p>{codigo}
-
-                                <button onClick={(e) => copyToClipboard(e)} className="copy-button">
-                                    <span role="img" aria-label="copiar">📋</span> 
-                                </button>
+                                Código generado:
+                                <p>
+                                    {codigo}
+                                    <button onClick={copyToClipboard} className="copy-button">
+                                        📋
+                                    </button>
                                 </p>
                             </div>
                         </section>
-
                         <section className='colum-register'>
                             <div className="form-group">
                                 <label>Nombre representante legal*</label>
@@ -209,14 +167,13 @@ const RegistroEmpresa = () => {
                                     required
                                 />
                             </div>
-                            <div className="form-group image-container">
-                        <label>Docente TIS asignado</label>
+                            <div className="form-group">
+                                <label>Docente TIS asignado</label>
                                 <select
                                     value={ID_docente}
                                     onChange={(e) => setIDDocente(e.target.value)}
                                     required
-                                    className="form-group image-container"
-                                    >
+                                >
                                     <option value="">Selecciona un Docente</option>
                                     {docentes.map(docente => (
                                         <option key={docente.ID_docente} value={docente.ID_docente}>
@@ -228,30 +185,24 @@ const RegistroEmpresa = () => {
                             <div className="form-group image-container">
                                 <label>Logo de la empresa (subir imagen)</label>
                                 <div>
-                                    <img
-                                        src={logoPreview}
-                                        className="imagen-upload"
-                                        />
+                                    {logoPreview && <img src={logoPreview} className="imagen-upload" alt="Vista previa del logo" />}
                                     <input
                                         type="file"
                                         accept="image/*"
                                         onChange={handleFileChange}
-                                        className='upload'
-                                        />
+                                        className="upload"
+                                        required
+                                    />
                                 </div>
                             </div>
                         </section>
                     </section>
                     {error && <p className="error-message">{error}</p>}
                     {success && <p className="success-message">Registro exitoso!</p>}
-                    <button onClick={handleSubmit} className='button'>Registrar empresa</button>
-                    {/* <button type="button" className='button' onClick={handleTestRegister}>Probar Registro</button> */}
+                    <button type="submit" className="button">Registrar empresa</button>
                 </form>
             </div>
         </section>
-    </>
-        
-        
     );
 };
 

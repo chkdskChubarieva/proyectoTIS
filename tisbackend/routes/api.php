@@ -75,6 +75,7 @@ Route::prefix('v1')->group(function () {
         Route::patch('/tareas/{id}/estado', [TareaController::class, 'updateEstado']);
 
         Route::get('/docentes', [DocenteController::class, 'index']);
+        Route::get('/docentes/usuario/{ID_usuario}', [DocenteController::class, 'getDocenteByUserID']);
         Route::get('/docentes/{id}', [DocenteController::class, 'show']);
 
 

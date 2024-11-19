@@ -1,32 +1,67 @@
-import React, { useEffect } from 'react'
-import Navbar from '../components/Navbar'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import {Outlet, useNavigate} from 'react-router-dom'
-import AuthUser from '../pageauth/AuthUser'
-import Sidebar from '../components/grupo-empresa/sidebar'
+import { useEffect, useState } from "react";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import AuthUser from "../pageauth/AuthUser";
+import Navbar from "../components/Navbar";
+import Header from "../components/Header";
+//import Sidebar from '../components/grupo-empresa/sidebar'
+import BarraLateralEst from "../components/BarraLateral/BarraLateralEst";
+import "../components/layout.css";
+import "../components/background.css";
+
 const LayoutEstudiante = () => {
-  const {getRol} = AuthUser()
-  const navigate = useNavigate()
+  const { getRol } = AuthUser();
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   useEffect(() => {
-    if(getRol()!="estudiante"){
-      navigate("/")
+    if (getRol() != "estudiante") {
+      navigate("/");
     }
-  },[])
-  
+  }, [getRol, navigate]);
+
+  const botonesNavbar = () => {
+    switch (location.pathname) {
+      case "/estudiante":
+        return [{ nombreBoton: "Inicio", hrefBoton: "#" }];
+      case "/estudiante/registro":
+        return [
+          { nombreBoton: "Inicio", hrefBoton: "/estudiante" },
+          { nombreBoton: "Registro", hrefBoton: "#" },
+        ];
+      case "/estudiante/unirse":
+        return [
+          { nombreBoton: "Inicio", hrefBoton: "/estudiante" },
+          { nombreBoton: "Unirse", hrefBoton: "#" },
+        ];
+      default:
+        return [];
+    }
+  };
+
   return (
     <>
-    <Header/>
-      <Navbar/>
-      <section className='conteiner-GE'>
+      <Header toggleSidebar={toggleSidebar} />
+      <Navbar botones={botonesNavbar()} />
+      <section className="conteiner-GE">
         <div className="content-container">
-            <Sidebar />
-            <Outlet/>
+          <BarraLateralEst
+            sidebarOpen={sidebarOpen}
+            toggleSidebar={toggleSidebar}
+          />
+          <div className="layout-main background">
+            <Outlet />
+          </div>
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default LayoutEstudiante
+export default LayoutEstudiante;

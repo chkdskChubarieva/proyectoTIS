@@ -100,7 +100,7 @@ const Sidebar = () => {
         <nav className="sidebar-container">
         {grupoEmpresa && dataGrupoEmpresa && (
             <div className='logotipo-grupoempresa'>
-                <img src={Person} alt="Logo Grupo Empresa" />
+                <img src={dataGrupoEmpresa.grupo_empresa.logo_empresa} alt="Logo Grupo Empresa" />
                 <p>{dataGrupoEmpresa.grupo_empresa.nombre_empresa}</p>
             </div>
         )}

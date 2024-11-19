@@ -55,6 +55,24 @@ class DocenteController extends Controller
         ]);
     }
 
+    public function getDocenteByUserID($ID_usuario)
+    {
+        // Intentar encontrar un estudiante con el ID_usuario proporcionado
+        $estudiante = Docente::where('ID_usuario', $ID_usuario)->with(['user', 'grupoEmpresas'])->first();
+
+        if ($estudiante) {
+            return response()->json([
+                'success' => true,
+                'data' => $estudiante,
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Estudiante no encontrado con el ID de usuario proporcionado.',
+            ], 404);
+        }  
+    }
+
 
     /**
      * Store a newly created resource in storage.

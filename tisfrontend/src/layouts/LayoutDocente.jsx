@@ -1,14 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import AuthUser from "../pageauth/AuthUser";
 
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
-import SidebarDocente from "../components/grupo-empresa/SidebarDocente";
+//import SidebarDocente from "../components/grupo-empresa/SidebarDocente";
+import BarraLateralDoc from "../components/BarraLateral/BarraLateralDoc";
+import "../components/layout.css";
+import "../components/background.css";
 
 const LayoutDocente = () => {
   const { getRol } = AuthUser();
   const navigate = useNavigate();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   useEffect(() => {
     if (getRol() != "docente") {
@@ -18,12 +27,17 @@ const LayoutDocente = () => {
 
   return (
     <>
-      <Header />
+      <Header toggleSidebar={toggleSidebar} />
       <Navbar />
       <section className="conteiner-GE">
         <div className="content-container">
-          <SidebarDocente />
-          <Outlet />
+          <BarraLateralDoc
+            sidebarOpen={sidebarOpen}
+            toggleSidebar={toggleSidebar}
+          />
+          <div className="layout-main background">
+            <Outlet />
+          </div>
         </div>
       </section>
     </>

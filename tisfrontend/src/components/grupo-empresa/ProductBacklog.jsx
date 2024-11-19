@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import ItemBacklog from "./ItemBacklog";
 import ItemTablaSprint from "./ItemTablaSprint";
 import ModalCrearHU from "./ModalCrearHU";
+import './RegistroEmpresa.css';
+import { useNavigate } from 'react-router-dom';
 import ModalNuevoSprint from "./ModalNuevoSprint";
 import axios from 'axios';
 import "./ProductBacklog.css";
@@ -82,12 +84,12 @@ const ProductBacklog = () => {
     <>
       {isModalSprintOpen && <ModalNuevoSprint closeModal={closeModalSprint} empresaId={empresaId} />}
       {isModalOpen && <ModalCrearHU closeModal={closeModal} />}
-      <div className="product-backlog w-full px-10 py-6">
+      <div className="w-full px-10 py-6 product-backlog">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold text-primary-800">Product Backlog</h1>
           <button
             type="button"
-            className="space-x-2 rounded-md bg-primary-500 p-2 text-white transition-colors hover:bg-primary-400"
+            className="p-2 space-x-2 text-white transition-colors rounded-md bg-primary-500 hover:bg-primary-400"
             onClick={openModal}
           >
             <i className="fa-solid fa-plus"></i>
@@ -95,14 +97,14 @@ const ProductBacklog = () => {
           </button>
         </div>
 
-        <div className="mt-5 flex gap-8">
-          <section className="tabla-backlog flex-1 rounded-md border border-primary-800">
-            <div className="flex justify-between border-b border-primary-800 px-6 py-3 font-semibold text-primary-800">
+        <div className="flex flex-col gap-8 mt-5 lg:flex lg:flex-row">
+          <section className="flex-1 order-last border rounded-md tabla-backlog border-primary-800 lg:order-first">
+            <div className="flex justify-between px-6 py-3 font-semibold border-b border-primary-800 text-primary-800">
               <span>Historia de usuario</span>
               <span># Sprint</span>
             </div>
 
-            <div className="space-y-2 p-3">
+            <div className="p-3 space-y-2">
               {backlogItems.length > 0 ? (
                 backlogItems.map((item) => (
                   <ItemBacklog
@@ -118,19 +120,19 @@ const ProductBacklog = () => {
             </div>
           </section>
 
-          <section className="tabla-sprint rounded-md border border-primary-800">
-            <div className="flex justify-between border-b border-primary-800 px-6 py-3 font-semibold text-primary-800">
+          <section className="border rounded-md lg:w-64 h-fit border-primary-800">
+            <div className="flex justify-between px-6 py-3 font-semibold border-b border-primary-800 text-primary-800">
               <span>Sprints</span>
               <button
                 type="button"
-                className="flex size-6 items-center justify-center rounded border-2 border-primary-200 text-primary-200 transition-colors hover:border-primary-500 hover:text-primary-500"
+                className="flex items-center justify-center transition-colors border-2 rounded size-6 border-primary-200 text-primary-200 hover:border-primary-500 hover:text-primary-500"
                 onClick={openModalSprint}
               >
                 <i className="fa-solid fa-plus"></i>
               </button>
             </div>
 
-            <div className="space-y-2 p-3">
+            <div className="p-3 space-y-2">
               {sprintItems.length > 0 ? (
                 sprintItems.map((sprint) => (
                   <ItemTablaSprint

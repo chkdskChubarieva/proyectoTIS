@@ -144,11 +144,7 @@ class EstudianteController extends Controller
                 'success' => false,
                 'message' => 'Estudiante no encontrado con el ID de usuario proporcionado.',
             ], 404);
-        }
-
-
-
-        
+        }  
     }
 
     public function infoEmpresa(): JsonResponse
