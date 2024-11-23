@@ -12,7 +12,6 @@ const BotonUser = () => {
     const getInfoEst = async () => {
         try {
             const response = await Config.getInfoEst();
-            console.log(response);
             setEstudiante(response.data);
         } catch (error) {
             console.error(

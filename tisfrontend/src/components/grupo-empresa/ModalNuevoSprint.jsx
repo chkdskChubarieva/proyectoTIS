@@ -23,6 +23,8 @@ const ModalNuevoSprint = ({ closeModal, empresaId }) => {
 
       if (response.status === 201) {
         alert("Sprint creado exitosamente");
+        
+        window.location.reload();
         closeModal();
       }
     } catch (error) {

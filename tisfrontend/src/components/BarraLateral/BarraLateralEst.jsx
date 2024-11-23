@@ -30,7 +30,7 @@ const BarraLateralEst = ({ sidebarOpen, toggleSidebar }) => {
       const estudianteData = response.data.data;
       if (estudianteData.ID_empresa) {
         setGrupoEmpresa(true);
-        console.log("esta es la data", estudianteData);
+        // console.log("esta es la data", estudianteData);
         setDataGrupoEmpresa(estudianteData);
         fetchSprints(estudianteData.ID_empresa);
       }

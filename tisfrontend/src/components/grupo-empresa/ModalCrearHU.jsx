@@ -21,10 +21,12 @@ const ModalCrearHU = ({ closeModal }) => {
       try {
         const response = await axios.get(
           `http://localhost:8000/api/v1/estudiante/${userId}`,
+          
         );
         if (response.data.data.ID_empresa) {
           setEmpresaId(response.data.data.ID_empresa);
         }
+        
       } catch (error) {
         console.error("Error al obtener el ID de la empresa:", error);
       }
@@ -42,6 +44,7 @@ const ModalCrearHU = ({ closeModal }) => {
           `http://localhost:8000/api/v1/grupo-empresa/${empresaId}/sprints`,
         );
         setSprints(response.data.sprints || []);
+        
       } catch (error) {
         console.error("Error al obtener los sprints:", error);
       }

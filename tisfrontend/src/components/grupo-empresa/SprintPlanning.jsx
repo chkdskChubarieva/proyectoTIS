@@ -82,6 +82,10 @@ const SprintPlanning = () => {
         const tasksByStatus = tasks.filter(
             task => task.historia_usuario.titulo === storyTitle && task.estado === status
         );
+
+
+        
+        console.log("la task:", tasks)
         return (
             <div className="column" onDrop={(e) => handleDrop(e, status)} onDragOver={(e) => e.preventDefault()}>
                 
@@ -94,6 +98,7 @@ const SprintPlanning = () => {
                             priority: task.historia_usuario.prioridad || 'medium',
                             assignee: task.estudiante ? task.estudiante.user.nombre : 'No asignado',
                             estimatedHours: task.estimacion,
+                            ID_estudiante: task.ID_estudiante,
                         }}
                         index={task.ID_tarea}
                         onDragStart={(e) => e.dataTransfer.setData('taskId', task.ID_tarea)}
@@ -117,20 +122,19 @@ const SprintPlanning = () => {
         <div className="sprint-planning">
             <h2 className="titulos">Planificación de Sprint</h2>
             <div className="task-table">
-                        <div className="column product-backlog">
-                            <h3 className="titulo-task-user">Historias de usuario</h3>
-                        </div>
-                        <div className="column product-backlog">
-                            <h3 className="titulo-task-user">Tareas</h3>
-                        </div>
-                        <div className="column product-backlog">
-                            <h3 className="titulo-task-user">En proceso</h3>
-                        </div>
-                        <div className="column product-backlog">
-                            <h3 className="titulo-task-user">Completadas</h3>
-                        </div>
-                        
-                    </div>
+                <div className="column product-backlog">
+                    <h3 className="titulo-task-user">Historias de usuario</h3>
+                </div>
+                <div className="column product-backlog">
+                    <h3 className="titulo-task-user">Tareas</h3>
+                </div>
+                <div className="column product-backlog">
+                    <h3 className="titulo-task-user">En proceso</h3>
+                </div>
+                <div className="column product-backlog">
+                    <h3 className="titulo-task-user">Completadas</h3>
+                </div>   
+            </div>
             {userStories.map(story => (
                 <div key={story.ID_historia} className="user-story-section">
 

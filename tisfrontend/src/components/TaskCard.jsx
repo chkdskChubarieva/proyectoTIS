@@ -1,16 +1,47 @@
-import React from 'react';
-import './TaskCard.css';
+import React, { useEffect, useState } from "react";
+import "./TaskCard.css";
+import axios from "axios";
 
 const StatusIcon = {
-  Backlog: <span className="icon-red">🔴</span>,
-  Tasks: <span className="icon-green">🔴</span>,
-  'In Process': <span className="icon-yellow">🟡</span>,
-  Done: <span className="icon-blue">🟢</span>,
+  Backlog: { icon: "🔴", class: "icon-red" },
+  Tasks: { icon: "🔴", class: "icon-green" },
+  "In Process": { icon: "🟡", class: "icon-yellow" },
+  Done: { icon: "🟢", class: "icon-blue" },
 };
 
-export const TaskCard = ({ task, index, onDragStart }) => {
-  
-  
+const AssigneeInfo = ({ nombre, puntos }) => (
+  <div className="task-assignee">
+    <div className="assignee-avatar">
+      <span className="avatar-initial">{nombre ? nombre.charAt(0).toUpperCase() : "?"}</span>
+    </div>
+    <span className="assignee-name">{nombre || "Cargando..."}</span>
+    <p className="assignee-time">{puntos} Puntos</p>
+  </div>
+);
+
+export const TaskCard = ({ task, onDragStart }) => {
+  const [nombre, setNombre] = useState("Cargando...");
+console.log("esta tarea pertenece a la tarea: ", task.nombre)
+
+  useEffect(() => {
+    const fetchEstudiante = async () => {
+      if (!task.ID_estudiante) {
+        setNombre("Desconocido");
+        return;
+      }
+
+      try {
+        const response = await axios.get(`http://localhost:8000/api/v1/estudiante/${task.ID_estudiante}`);
+        setNombre(response.data.data.user.nombre || "Desconocido");
+      } catch (error) {
+        console.error(`Error al obtener el estudiante con ID ${task.ID_estudiante}:`, error);
+        setNombre("Desconocido");
+      }
+    };
+
+    fetchEstudiante();
+  }, [task.ID_estudiante]); // Asegúrate de que useEffect se ejecute cada vez que `task.ID_estudiante` cambie
+
   return (
     <div
       className="task-card"
@@ -19,22 +50,11 @@ export const TaskCard = ({ task, index, onDragStart }) => {
     >
       <div className="task-header">
         <h3 className="task-title">{task.title}</h3>
-        <div className="status-task">
-          {StatusIcon[task.status]}
+        <div className={`status-task ${StatusIcon[task.status]?.class}`}>
+          {StatusIcon[task.status]?.icon || "❔"}
         </div>
       </div>
-      {/* <p className="task-description">{task.description}</p> */}
-      {task.assignee && (
-        <div className="task-assignee">
-          <div className="assignee-avatar">
-            <span className="avatar-initial">
-              {task.assignee.charAt(0).toUpperCase()}
-            </span>
-          </div>
-          <span className="assignee-name">{task.assignee}</span>
-          <p className="assignee-time">{task.estimatedHours} Puntos</p>
-        </div>
-      )}
+      {task.assignee && <AssigneeInfo nombre={nombre} puntos={task.estimatedHours} />}
     </div>
   );
 };
