@@ -29,6 +29,8 @@ Route::prefix('v1')->group(function () {
     Route::post("/auth/loginDoc", [AuthController::class, 'loginDoc']);
 
     
+    Route::get('/estudiante/{id}', [EstudianteController::class, 'getEstudianteByUserID']);
+    Route::get('/estudiante-info/{id}', [EstudianteController::class, 'showInfoEstudent']);
     // Route::get('/tareas', [TareaController::class, 'tareas']);
     
     Route::middleware('auth:sanctum')->get('/auth/user', [AuthController::class, 'getAuthenticatedUser']);
@@ -43,9 +45,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/estudiante/getInfoEst', [EstudianteController::class, 'getInfoEst']);  
         Route::get('/estudiante/info', [EstudianteController::class, 'infoEmpresa']);
         
-        //Route::get('/estudiantes', [EstudianteController::class, 'index']);
-        Route::get('/estudiante/{id}', [EstudianteController::class, 'getEstudianteByUserID']);
-        // Route::get('/estudiante/{id}', [EstudianteController::class, 'showInfoEstudent']);
+        // //Route::get('/estudiantes', [EstudianteController::class, 'index']);
+        // Route::get('/estudiante/{id}', [EstudianteController::class, 'getEstudianteByUserID']);
 
         Route::get('/estudiantes/usuario/{ID_usuario}', [EstudianteController::class, 'getEstudianteByUserID']);
         Route::get('/estudiantes-grupo', [EstudianteController::class, 'getEstudiantesMismoGrupo']);

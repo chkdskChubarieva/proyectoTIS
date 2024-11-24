@@ -38,7 +38,7 @@ const JoinGroupForm = () => {
       return;
     }
 
-    const userID = userData.roles[0].id;
+    const userID = userData;
     if (!userID) {
       dispatch({
         type: "SET_MESSAGE",

@@ -25,13 +25,13 @@ console.log("esta tarea pertenece a la tarea: ", task.nombre)
 
   useEffect(() => {
     const fetchEstudiante = async () => {
-      if (!task.ID_estudiante) {
-        setNombre("Desconocido");
-        return;
-      }
 
       try {
-        const response = await axios.get(`http://localhost:8000/api/v1/estudiante/${task.ID_estudiante}`);
+        
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`http://localhost:8000/api/v1/estudiante-info/${task.ID_estudiante}`
+        );
+        console.log("ya casi", response.data.data.user.ID_usuario)
         setNombre(response.data.data.user.nombre || "Desconocido");
       } catch (error) {
         console.error(`Error al obtener el estudiante con ID ${task.ID_estudiante}:`, error);
